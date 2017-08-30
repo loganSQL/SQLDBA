@@ -60,5 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="showbackups.sql" />
+    <Build Include="showdbs.sql" />
   </ItemGroup>
 </Project>
