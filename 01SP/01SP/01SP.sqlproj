@@ -61,5 +61,8 @@
   <ItemGroup>
     <Build Include="showbackups.sql" />
     <Build Include="showdbs.sql" />
+    <Build Include="showexeccount.sql" />
+    <Build Include="showfiles.sql" />
+    <Build Include="showjobactivity.sql" />
   </ItemGroup>
 </Project>
