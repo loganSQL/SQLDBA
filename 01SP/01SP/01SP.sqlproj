@@ -64,5 +64,6 @@
     <Build Include="showexeccount.sql" />
     <Build Include="showfiles.sql" />
     <Build Include="showjobactivity.sql" />
+    <Build Include="showmissingindex.sql" />
   </ItemGroup>
 </Project>
