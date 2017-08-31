@@ -1,8 +1,10 @@
-﻿
+﻿/*
+	store procedure to show backups for all databases backups since yesterday
+*/
 create procedure [dbo].[showbackups]
 as
 --------------------------------------------------------------------------------- 
---Database Backups for all databases For Previous Week 
+--Database Backups for current database backups since yesterday
 --------------------------------------------------------------------------------- 
 SELECT 
 CONVERT(CHAR(100), SERVERPROPERTY('Servername')) AS Server, 
