@@ -1,4 +1,8 @@
-﻿create procedure [dbo].[showdbs]
+﻿/*
+	Store Procedure to list all databases and its options
+*/
+
+create procedure [dbo].[showdbs]
 as
 SELECT  @@SERVERNAME AS Server ,
         name AS DBName ,
