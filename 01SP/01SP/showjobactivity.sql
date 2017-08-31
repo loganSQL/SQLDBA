@@ -1,4 +1,8 @@
-﻿create procedure [dbo].[showjobactivity] as
+﻿/*
+	store procedure to list all the jobs last run time and status
+*/
+
+create procedure [dbo].[showjobactivity] as
 WITH CTE_MostRecentJobRun AS  
  (  
  -- For each job get the most recent run (this will be the one where Rnk=1)  
