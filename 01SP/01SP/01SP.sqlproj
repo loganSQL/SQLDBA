@@ -68,5 +68,6 @@
     <Build Include="showrequest.sql" />
     <Build Include="showserver.sql" />
     <Build Include="showsysadmin.sql" />
+    <Build Include="showtop20.sql" />
   </ItemGroup>
 </Project>
