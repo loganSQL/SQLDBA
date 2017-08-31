@@ -66,5 +66,6 @@
     <Build Include="showjobactivity.sql" />
     <Build Include="showmissingindex.sql" />
     <Build Include="showrequest.sql" />
+    <Build Include="showserver.sql" />
   </ItemGroup>
 </Project>
