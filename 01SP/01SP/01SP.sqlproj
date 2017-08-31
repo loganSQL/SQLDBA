@@ -67,5 +67,6 @@
     <Build Include="showmissingindex.sql" />
     <Build Include="showrequest.sql" />
     <Build Include="showserver.sql" />
+    <Build Include="showsysadmin.sql" />
   </ItemGroup>
 </Project>
