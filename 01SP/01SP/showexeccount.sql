@@ -1,4 +1,7 @@
-﻿create procedure [dbo].[showexeccount] as
+﻿/*
+	store procedure to show the execution counts of queries and its associated objects
+*/
+create procedure [dbo].[showexeccount] as
 SELECT qs.execution_count,
     SUBSTRING(qt.text,qs.statement_start_offset/2 +1, 
                  (CASE WHEN qs.statement_end_offset = -1 
