@@ -1,4 +1,7 @@
-﻿create procedure [dbo].[showfiles]
+﻿/*
+	store procedure to show the databases and its physical files / sizes
+*/
+create procedure [dbo].[showfiles]
 as
 SELECT
     db.name AS DBName,
