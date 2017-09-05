@@ -69,5 +69,6 @@
     <Build Include="showserver.sql" />
     <Build Include="showsysadmin.sql" />
     <Build Include="showtop20.sql" />
+    <Build Include="generateusersync.sql" />
   </ItemGroup>
 </Project>
