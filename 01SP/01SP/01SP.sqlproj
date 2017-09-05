@@ -70,5 +70,6 @@
     <Build Include="showsysadmin.sql" />
     <Build Include="showtop20.sql" />
     <Build Include="generateusersync.sql" />
+    <Build Include="showwait.sql" />
   </ItemGroup>
 </Project>
