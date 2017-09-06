@@ -2,7 +2,7 @@
 	Job: SQL_ErrorLog_Checking
 	The script to create a SQL Agent Job
 	To monitor any interested errorlog msg and Send email alert
-	Dependancy: SQL_ErrorLog_Checking
+	Dependancy: SQL_ErrorLog_Checking, SQL_ErrorLog_Alert_Notify
 */
 USE [msdb]
 GO
