@@ -36,7 +36,7 @@ EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'SQL_Job_Activity_Report',
 		@owner_login_name=N'sa', 
 		@notify_email_operator_name=N'sqladmin', @job_id = @jobId OUTPUT
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [jobactivityreport]    Script Date: 2017-09-06 8:55:42 AM ******/
+/****** Object:  Step [jobactivityreport] ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'jobactivityreport', 
 		@step_id=1, 
 		@cmdexec_success_code=0, 
