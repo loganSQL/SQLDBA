@@ -61,5 +61,6 @@
   <ItemGroup>
     <None Include="Notification.sql" />
     <None Include="SQL_Job_Activity_Report.sql" />
+    <None Include="SQL_ErrorLog_Checking.sql" />
   </ItemGroup>
 </Project>
