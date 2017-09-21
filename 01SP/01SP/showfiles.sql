@@ -6,6 +6,7 @@ as
 SELECT
     db.name AS DBName,
     type_desc AS FileType,
+	mf.name as 'Name',
     Physical_Name AS Location,
 	round(size*8/1024,0) as 'Size(MB)'
 FROM
