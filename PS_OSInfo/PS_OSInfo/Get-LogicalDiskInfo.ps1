@@ -32,8 +32,15 @@ Process
 		'Cores' = $cs.numberoflogicalprocessors;
 		'SystemType' = $cs.SystemType;
 	}
-	$disks = Get-WmiObject -Query:'SELECT DeviceID, Size, FreeSpace FROM Win32_LogicalDisk WHERE DriveType=3' -Computername:"$computerName"
-	foreach ($disk in $disks)
+	New-Object -TypeName PSObject -Property $props
+
+	$disks = Get-WmiObject -Query:'SELECT DeviceID, VolumeName, Size, FreeSpace FROM Win32_LogicalDisk WHERE DriveType=3' -Computername:"$computerName"
+	$disks | format-table DeviceID, VolumeName,
+		@{ Label='SizeGB'; Expression={[math]::round($_.Size / 1GB,2)}}, 
+		@{ Label='FreeSizeGB'; Expression={[math]::round($_.FreeSpace / 1GB,2)}},
+		@{ Label='%Free'; Expression={[math]::round(($_.FreeSpace / $_.Size)*100,2)}}
+
+<#	foreach ($disk in $disks)
 	{
 		if ($disk.Size -gt 0)
 		{
@@ -42,7 +49,8 @@ Process
 			$props["$($disk.DeviceID)Drive_%Free"] = '{0:0.00}%' -f [math]::Round(($disk.FreeSpace/$disk.Size)*100, 2)
 		}
 	}
-	New-Object -TypeName PSObject -Property $props
+	
+#>
 }
 }
 
