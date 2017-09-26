@@ -1,16 +1,19 @@
+#
+# Get_SQLHostInfo.ps1
+#
 <#
-	Get-LogicalDiskInfo
+	Get_SQLHostInfo
 	
-	To Obtain Machine, OS, Disk Sizes from a machine or a list of machines
+	To Obtain Machine, OS, Disk Sizes, SQL Services from a machine or a list of machines
 
 	Examples:
-		Get-LogicalDiskInfo    <- To obtain info from the current machine only
+		Get_SQLHostInfo    <- To obtain info from the current machine only
 		$myhost = ('myhost1','myhost2',...,'hostN')
-		$myhost | Get-LogicalDiskInfo		<- To obtain info from the list of hosts
+		$myhost | Get_SQLHostInfo		<- To obtain info from the list of hosts
 #>
 Set-StrictMode -Version 2
 
-Function Get-LogicalDiskInfo
+Function Get_SQLHostInfo
 {
 Param(
 	[parameter(ValueFromPipeline=$true)]
@@ -32,8 +35,13 @@ Process
 		'Cores' = $cs.numberoflogicalprocessors;
 		'SystemType' = $cs.SystemType;
 	}
+	#
+	# Host / OS Info
+	#
 	New-Object -TypeName PSObject -Property $props
-
+	#
+	# Disk Info
+	#
 	$disks = Get-WmiObject -Query:'SELECT DeviceID, VolumeName, Size, FreeSpace FROM Win32_LogicalDisk WHERE DriveType=3' -Computername:"$computerName"
 	$disks | format-table DeviceID, VolumeName,
 		@{ Label='TotalGB'; Expression={[math]::round($_.Size / 1GB,2)}}, 
@@ -51,8 +59,15 @@ Process
 	}
 	
 #>
+
+	#
+	# SQL Services Info
+	#
+	Get-Service -computername "$computerName" | Where-Object{$_.DisplayName -like "*SQL*"} | format-table -property Status, Name, DisplayName
+
+
 date
 }
 }
 cls
-Get-LogicalDiskInfo
+Get_SQLHostInfo

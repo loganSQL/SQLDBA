@@ -28,6 +28,7 @@
   </PropertyGroup>
   <ItemGroup />
   <ItemGroup>
+    <Compile Include="Get-SQLHostInfo.ps1" />
     <Compile Include="PS_OSInfo.psd1" />
     <Compile Include="PS_OSInfo.psm1" />
     <Compile Include="Get-LogicalDiskInfo.ps1" />
