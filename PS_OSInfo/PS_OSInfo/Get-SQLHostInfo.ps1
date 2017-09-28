@@ -38,15 +38,27 @@ Process
 	#
 	# Host / OS Info
 	#
+	echo "1) HOST DETAILS"
 	New-Object -TypeName PSObject -Property $props
 	#
 	# Disk Info
 	#
+	echo "2) STORAGE DETAILS"
 	$disks = Get-WmiObject -Query:'SELECT DeviceID, VolumeName, Size, FreeSpace FROM Win32_LogicalDisk WHERE DriveType=3' -Computername:"$computerName"
 	$disks | format-table DeviceID, VolumeName,
 		@{ Label='TotalGB'; Expression={[math]::round($_.Size / 1GB,2)}}, 
 		@{ Label='FreeGB'; Expression={[math]::round($_.FreeSpace / 1GB,2)}},
-		@{ Label='%Free'; Expression={[math]::round(($_.FreeSpace / $_.Size)*100,2)}}
+		@{ Label='%Free'; Expression={[math]::round(($_.FreeSpace / $_.Size
+		)*100,2)}}
+
+	#
+	# NetAdapter
+	#
+	# for Windows Server 2012 onward, better info
+	#Get-NetAdapter -physical -CimSession "$computerName" | format-table Name, InterfaceDescription, LinkSpeed
+	# old way
+	echo "3) NETWORK DETAILS"
+	get-wmiobject win32_networkadapter -computername "$computerName" -filter "netconnectionstatus = 2" |format-table DeviceID,ServiceName, Name, @{ Label='Speed(Gbps)'; Expression={[math]::round($_.Speed / 1000000000,0)}}
 
 <#	foreach ($disk in $disks)
 	{
@@ -63,6 +75,7 @@ Process
 	#
 	# SQL Services Info
 	#
+	echo "4) SQL SERVICES"
 	Get-Service -computername "$computerName" | Where-Object{$_.DisplayName -like "*SQL*"} | format-table -property Status, Name, DisplayName
 
 
