@@ -153,7 +153,7 @@ OPEN Check_Memory
 FETCH NEXT FROM Check_Memory
 INTO @CheckMemoryTotalMemoryMB,@CheckMemoryPercMemoryFree
 
-    INSERT INTO [SQLMonitor].[dbo].[DW Running Query]
+    INSERT INTO [dbo].[DW Running Query]
     ([User Name]
     ,[Date and Time]
     ,[Running ID Batch]
@@ -213,7 +213,7 @@ INTO @blocked,@dname,@open_tran,@status,@hostname,@cmd,@cpu,@physicalIO
 
 WHILE @@FETCH_STATUS = 0
   BEGIN
-    INSERT INTO [SQLMonitor].[dbo].[DW Running Query]
+    INSERT INTO [dbo].[DW Running Query]
            ([User Name]
            ,[Date and Time]
            ,[Running ID Batch]
@@ -259,155 +259,9 @@ SELECT     ID, [User Name], [Date and Time], [Running ID Batch], blocked, [Datab
                       [TOP 50 Last Worker Time], [TOP 50 Total Elapsed Time in S], [TOP 50 Last Elapsed Time in S], [TOP 50 Last Execution Time], CONVERT(varchar, [Date and Time], 
                       105) AS [Running Date]
 FROM         dbo.[DW Running Query]
-WHERE     ([TOP 50 SQL Statement] <> N'') AND ([Date and Time] BETWEEN CONVERT(DATETIME, '2015-10-08 10:00:00', 102) AND CONVERT(DATETIME, '2015-10-08 12:00:00', 
-                      102))
+WHERE     ([TOP 50 SQL Statement] <> N'')
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
-Begin DesignProperties = 
-   Begin PaneConfigurations = 
-      Begin PaneConfiguration = 0
-         NumPanes = 4
-         Configuration = "(H (1[34] 4[33] 2[9] 3) )"
-      End
-      Begin PaneConfiguration = 1
-         NumPanes = 3
-         Configuration = "(H (1 [50] 4 [25] 3))"
-      End
-      Begin PaneConfiguration = 2
-         NumPanes = 3
-         Configuration = "(H (1 [50] 2 [25] 3))"
-      End
-      Begin PaneConfiguration = 3
-         NumPanes = 3
-         Configuration = "(H (4 [30] 2 [40] 3))"
-      End
-      Begin PaneConfiguration = 4
-         NumPanes = 2
-         Configuration = "(H (1 [56] 3))"
-      End
-      Begin PaneConfiguration = 5
-         NumPanes = 2
-         Configuration = "(H (2 [66] 3))"
-      End
-      Begin PaneConfiguration = 6
-         NumPanes = 2
-         Configuration = "(H (4 [50] 3))"
-      End
-      Begin PaneConfiguration = 7
-         NumPanes = 1
-         Configuration = "(V (3))"
-      End
-      Begin PaneConfiguration = 8
-         NumPanes = 3
-         Configuration = "(H (1[56] 4[18] 2) )"
-      End
-      Begin PaneConfiguration = 9
-         NumPanes = 2
-         Configuration = "(H (1 [75] 4))"
-      End
-      Begin PaneConfiguration = 10
-         NumPanes = 2
-         Configuration = "(H (1[66] 2) )"
-      End
-      Begin PaneConfiguration = 11
-         NumPanes = 2
-         Configuration = "(H (4 [60] 2))"
-      End
-      Begin PaneConfiguration = 12
-         NumPanes = 1
-         Configuration = "(H (1) )"
-      End
-      Begin PaneConfiguration = 13
-         NumPanes = 1
-         Configuration = "(V (4))"
-      End
-      Begin PaneConfiguration = 14
-         NumPanes = 1
-         Configuration = "(V (2))"
-      End
-      ActivePaneConfig = 0
-   End
-   Begin DiagramPane = 
-      Begin Origin = 
-         Top = 0
-         Left = 0
-      End
-      Begin Tables = 
-         Begin Table = "DW Running Query"
-            Begin Extent = 
-               Top = 6
-               Left = 38
-               Bottom = 114
-               Right = 295
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-      End
-   End
-   Begin SQLPane = 
-   End
-   Begin DataPane = 
-      Begin ParameterDefaults = ""
-      End
-      Begin ColumnWidths = 33
-         Width = 284
-         Width = 1500
-         Width = 1500
-         Width = 3015
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-      End
-   End
-   Begin CriteriaPane = 
-      Begin ColumnWidths = 11
-         Column = 3570
-         Alias = 900
-         Table = 1170
-         Output = 720
-         Append = 1400
-         NewValue = 1170
-         SortType = 1350
-         SortOrder = 945
-         GroupBy = 1350
-         Filter = 4830
-         Or = 1350
-         Or = 1350
-         Or = 1350
-      End
-   End
-End
-' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'V_SQLMonitorQueryTOP50_EXPENSIVE'
-GO
-EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'V_SQLMonitorQueryTOP50_EXPENSIVE'
-GO
+
 /****** Object:  View [dbo].[V_SQLMonitorQueryTOP100_POOR]    Script Date: 09/14/2017 12:03:36 ******/
 SET ANSI_NULLS ON
 GO
@@ -424,153 +278,7 @@ SELECT     ID, [User Name], [Date and Time], [Running ID Batch], blocked, [Datab
 FROM         dbo.[DW Running Query]
 WHERE     ([TOP 100 SQL Statement] <> N'')
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
-Begin DesignProperties = 
-   Begin PaneConfigurations = 
-      Begin PaneConfiguration = 0
-         NumPanes = 4
-         Configuration = "(H (1[27] 4[38] 2[7] 3) )"
-      End
-      Begin PaneConfiguration = 1
-         NumPanes = 3
-         Configuration = "(H (1 [50] 4 [25] 3))"
-      End
-      Begin PaneConfiguration = 2
-         NumPanes = 3
-         Configuration = "(H (1 [50] 2 [25] 3))"
-      End
-      Begin PaneConfiguration = 3
-         NumPanes = 3
-         Configuration = "(H (4 [30] 2 [40] 3))"
-      End
-      Begin PaneConfiguration = 4
-         NumPanes = 2
-         Configuration = "(H (1 [56] 3))"
-      End
-      Begin PaneConfiguration = 5
-         NumPanes = 2
-         Configuration = "(H (2 [66] 3))"
-      End
-      Begin PaneConfiguration = 6
-         NumPanes = 2
-         Configuration = "(H (4 [50] 3))"
-      End
-      Begin PaneConfiguration = 7
-         NumPanes = 1
-         Configuration = "(V (3))"
-      End
-      Begin PaneConfiguration = 8
-         NumPanes = 3
-         Configuration = "(H (1[56] 4[18] 2) )"
-      End
-      Begin PaneConfiguration = 9
-         NumPanes = 2
-         Configuration = "(H (1 [75] 4))"
-      End
-      Begin PaneConfiguration = 10
-         NumPanes = 2
-         Configuration = "(H (1[66] 2) )"
-      End
-      Begin PaneConfiguration = 11
-         NumPanes = 2
-         Configuration = "(H (4 [60] 2))"
-      End
-      Begin PaneConfiguration = 12
-         NumPanes = 1
-         Configuration = "(H (1) )"
-      End
-      Begin PaneConfiguration = 13
-         NumPanes = 1
-         Configuration = "(V (4))"
-      End
-      Begin PaneConfiguration = 14
-         NumPanes = 1
-         Configuration = "(V (2))"
-      End
-      ActivePaneConfig = 0
-   End
-   Begin DiagramPane = 
-      Begin Origin = 
-         Top = 0
-         Left = 0
-      End
-      Begin Tables = 
-         Begin Table = "DW Running Query"
-            Begin Extent = 
-               Top = 6
-               Left = 38
-               Bottom = 114
-               Right = 295
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-      End
-   End
-   Begin SQLPane = 
-   End
-   Begin DataPane = 
-      Begin ParameterDefaults = ""
-      End
-      Begin ColumnWidths = 34
-         Width = 284
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 4170
-         Width = 1500
-         Width = 2910
-         Width = 3030
-         Width = 2310
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-      End
-   End
-   Begin CriteriaPane = 
-      Begin ColumnWidths = 11
-         Column = 3780
-         Alias = 1665
-         Table = 1170
-         Output = 720
-         Append = 1400
-         NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
-         GroupBy = 1350
-         Filter = 3780
-         Or = 1350
-         Or = 1350
-         Or = 1350
-      End
-   End
-End
-' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'V_SQLMonitorQueryTOP100_POOR'
-GO
-EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'V_SQLMonitorQueryTOP100_POOR'
-GO
+
 /****** Object:  View [dbo].[V_SQLMonitorQueryCPUBenchMark]    Script Date: 09/14/2017 12:03:36 ******/
 SET ANSI_NULLS ON
 GO
@@ -587,128 +295,7 @@ SELECT     ID, [User Name], [Date and Time], [Running ID Batch], blocked, [Datab
 FROM         dbo.[DW Running Query]
 WHERE     (cpu > 0) AND (hostname <> N'')
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
-Begin DesignProperties = 
-   Begin PaneConfigurations = 
-      Begin PaneConfiguration = 0
-         NumPanes = 4
-         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
-      End
-      Begin PaneConfiguration = 1
-         NumPanes = 3
-         Configuration = "(H (1 [50] 4 [25] 3))"
-      End
-      Begin PaneConfiguration = 2
-         NumPanes = 3
-         Configuration = "(H (1 [50] 2 [25] 3))"
-      End
-      Begin PaneConfiguration = 3
-         NumPanes = 3
-         Configuration = "(H (4 [30] 2 [40] 3))"
-      End
-      Begin PaneConfiguration = 4
-         NumPanes = 2
-         Configuration = "(H (1 [56] 3))"
-      End
-      Begin PaneConfiguration = 5
-         NumPanes = 2
-         Configuration = "(H (2 [66] 3))"
-      End
-      Begin PaneConfiguration = 6
-         NumPanes = 2
-         Configuration = "(H (4 [50] 3))"
-      End
-      Begin PaneConfiguration = 7
-         NumPanes = 1
-         Configuration = "(V (3))"
-      End
-      Begin PaneConfiguration = 8
-         NumPanes = 3
-         Configuration = "(H (1[56] 4[18] 2) )"
-      End
-      Begin PaneConfiguration = 9
-         NumPanes = 2
-         Configuration = "(H (1 [75] 4))"
-      End
-      Begin PaneConfiguration = 10
-         NumPanes = 2
-         Configuration = "(H (1[66] 2) )"
-      End
-      Begin PaneConfiguration = 11
-         NumPanes = 2
-         Configuration = "(H (4 [60] 2))"
-      End
-      Begin PaneConfiguration = 12
-         NumPanes = 1
-         Configuration = "(H (1) )"
-      End
-      Begin PaneConfiguration = 13
-         NumPanes = 1
-         Configuration = "(V (4))"
-      End
-      Begin PaneConfiguration = 14
-         NumPanes = 1
-         Configuration = "(V (2))"
-      End
-      ActivePaneConfig = 0
-   End
-   Begin DiagramPane = 
-      Begin Origin = 
-         Top = 0
-         Left = 0
-      End
-      Begin Tables = 
-         Begin Table = "DW Running Query"
-            Begin Extent = 
-               Top = 6
-               Left = 38
-               Bottom = 114
-               Right = 295
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-      End
-   End
-   Begin SQLPane = 
-   End
-   Begin DataPane = 
-      Begin ParameterDefaults = ""
-      End
-      Begin ColumnWidths = 9
-         Width = 284
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-      End
-   End
-   Begin CriteriaPane = 
-      Begin ColumnWidths = 11
-         Column = 1440
-         Alias = 900
-         Table = 1170
-         Output = 720
-         Append = 1400
-         NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
-         GroupBy = 1350
-         Filter = 1350
-         Or = 1350
-         Or = 1350
-         Or = 1350
-      End
-   End
-End
-' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'V_SQLMonitorQueryCPUBenchMark'
-GO
-EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'V_SQLMonitorQueryCPUBenchMark'
-GO
+
 /****** Object:  View [dbo].[V_SQLMonitorIndicators]    Script Date: 09/14/2017 12:03:36 ******/
 SET ANSI_NULLS ON
 GO
@@ -719,170 +306,7 @@ AS
 SELECT     dbo.[DW Running Counter].*, CONVERT(varchar, [Date and Time], 105) AS [Running Date]
 FROM         dbo.[DW Running Counter]
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
-Begin DesignProperties = 
-   Begin PaneConfigurations = 
-      Begin PaneConfiguration = 0
-         NumPanes = 4
-         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
-      End
-      Begin PaneConfiguration = 1
-         NumPanes = 3
-         Configuration = "(H (1 [50] 4 [25] 3))"
-      End
-      Begin PaneConfiguration = 2
-         NumPanes = 3
-         Configuration = "(H (1 [50] 2 [25] 3))"
-      End
-      Begin PaneConfiguration = 3
-         NumPanes = 3
-         Configuration = "(H (4 [30] 2 [40] 3))"
-      End
-      Begin PaneConfiguration = 4
-         NumPanes = 2
-         Configuration = "(H (1 [56] 3))"
-      End
-      Begin PaneConfiguration = 5
-         NumPanes = 2
-         Configuration = "(H (2 [66] 3))"
-      End
-      Begin PaneConfiguration = 6
-         NumPanes = 2
-         Configuration = "(H (4 [50] 3))"
-      End
-      Begin PaneConfiguration = 7
-         NumPanes = 1
-         Configuration = "(V (3))"
-      End
-      Begin PaneConfiguration = 8
-         NumPanes = 3
-         Configuration = "(H (1[56] 4[18] 2) )"
-      End
-      Begin PaneConfiguration = 9
-         NumPanes = 2
-         Configuration = "(H (1 [75] 4))"
-      End
-      Begin PaneConfiguration = 10
-         NumPanes = 2
-         Configuration = "(H (1[66] 2) )"
-      End
-      Begin PaneConfiguration = 11
-         NumPanes = 2
-         Configuration = "(H (4 [60] 2))"
-      End
-      Begin PaneConfiguration = 12
-         NumPanes = 1
-         Configuration = "(H (1) )"
-      End
-      Begin PaneConfiguration = 13
-         NumPanes = 1
-         Configuration = "(V (4))"
-      End
-      Begin PaneConfiguration = 14
-         NumPanes = 1
-         Configuration = "(V (2))"
-      End
-      ActivePaneConfig = 0
-   End
-   Begin DiagramPane = 
-      Begin Origin = 
-         Top = 0
-         Left = 0
-      End
-      Begin Tables = 
-         Begin Table = "DW Running Counter"
-            Begin Extent = 
-               Top = 6
-               Left = 38
-               Bottom = 207
-               Right = 295
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-      End
-   End
-   Begin SQLPane = 
-   End
-   Begin DataPane = 
-      Begin ParameterDefaults = ""
-      End
-      Begin ColumnWidths = 49
-         Width = 284
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 2190
-         Width = 1815
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-      End
-   End
-   Begin CriteriaPane = 
-      Begin ColumnWidths = 11
-         Column = 1440
-         Alias = 2625
-         Table = 1170
-         Output = 720
-         Append = 1400
-         NewValue = 1170
-         SortType = 1350
-  ' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'V_SQLMonitorIndicators'
-GO
-EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N'       SortOrder = 1410
-         GroupBy = 1350
-         Filter = 1350
-         Or = 1350
-         Or = 1350
-         Or = 1350
-      End
-   End
-End
-' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'V_SQLMonitorIndicators'
-GO
-EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=2 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'V_SQLMonitorIndicators'
-GO
+
 /****** Object:  StoredProcedure [dbo].[TOP_50]    Script Date: 09/14/2017 12:03:37 ******/
 SET ANSI_NULLS ON
 GO
@@ -947,7 +371,7 @@ INTO @top50sqlstatement ,
   @top50lastexecutiontime 
   WHILE @@FETCH_STATUS = 0
    BEGIN
-   INSERT INTO [SQLMonitor].[dbo].[DW Running Query]
+   INSERT INTO [dbo].[DW Running Query]
     ([User Name]
 	   ,[Date and Time]
 	   ,[Running ID Batch]
@@ -1039,7 +463,7 @@ INTO @top100sqlstatement,@top100lastexecutiontime,@top100avarageIO,
      @top100avarageCPUTimesec,@top100avarageelapsedtimesec,@top100executioncount
  WHILE @@FETCH_STATUS = 0
    BEGIN
-    INSERT INTO [SQLMonitor].[dbo].[DW Running Query]
+    INSERT INTO [dbo].[DW Running Query]
     ([User Name]
     ,[Date and Time]
     ,[Running ID Batch]
@@ -1107,7 +531,7 @@ INTO @object_name ,
 
 WHILE @@FETCH_STATUS = 0
   BEGIN
-    INSERT INTO [SQLMonitor].[dbo].[DW Running Counter]
+    INSERT INTO [dbo].[DW Running Counter]
            ([User Name]
            ,[Date and Time]
            ,[Running ID Batch]
@@ -1172,7 +596,7 @@ INTO @object_name ,
 
 WHILE @@FETCH_STATUS = 0
   BEGIN
-    INSERT INTO [SQLMonitor].[dbo].[DW Running Counter]
+    INSERT INTO [dbo].[DW Running Counter]
            ([User Name]
            ,[Date and Time]
            ,[Running ID Batch]
@@ -1237,7 +661,7 @@ INTO @object_name ,
 
 WHILE @@FETCH_STATUS = 0
   BEGIN
-    INSERT INTO [SQLMonitor].[dbo].[DW Running Counter]
+    INSERT INTO [dbo].[DW Running Counter]
            ([User Name]
            ,[Date and Time]
            ,[Running ID Batch]
@@ -1302,7 +726,7 @@ INTO @object_name ,
 
 WHILE @@FETCH_STATUS = 0
   BEGIN
-    INSERT INTO [SQLMonitor].[dbo].[DW Running Counter]
+    INSERT INTO [dbo].[DW Running Counter]
            ([User Name]
            ,[Date and Time]
            ,[Running ID Batch]
@@ -1367,7 +791,7 @@ INTO @object_name ,
 
 WHILE @@FETCH_STATUS = 0
   BEGIN
-    INSERT INTO [SQLMonitor].[dbo].[DW Running Counter]
+    INSERT INTO [dbo].[DW Running Counter]
            ([User Name]
            ,[Date and Time]
            ,[Running ID Batch]
@@ -1432,7 +856,7 @@ INTO @object_name ,
 
 WHILE @@FETCH_STATUS = 0
   BEGIN
-    INSERT INTO [SQLMonitor].[dbo].[DW Running Counter]
+    INSERT INTO [dbo].[DW Running Counter]
            ([User Name]
            ,[Date and Time]
            ,[Running ID Batch]
@@ -1497,7 +921,7 @@ INTO @object_name ,
 
 WHILE @@FETCH_STATUS = 0
   BEGIN
-    INSERT INTO [SQLMonitor].[dbo].[DW Running Counter]
+    INSERT INTO [dbo].[DW Running Counter]
            ([User Name]
            ,[Date and Time]
            ,[Running ID Batch]
@@ -1562,7 +986,7 @@ INTO @object_name ,
 
 WHILE @@FETCH_STATUS = 0
   BEGIN
-    INSERT INTO [SQLMonitor].[dbo].[DW Running Counter]
+    INSERT INTO [dbo].[DW Running Counter]
            ([User Name]
            ,[Date and Time]
            ,[Running ID Batch]
@@ -1627,7 +1051,7 @@ INTO @object_name ,
 
 WHILE @@FETCH_STATUS = 0
   BEGIN
-    INSERT INTO [SQLMonitor].[dbo].[DW Running Counter]
+    INSERT INTO [dbo].[DW Running Counter]
            ([User Name]
            ,[Date and Time]
            ,[Running ID Batch]
@@ -1692,7 +1116,7 @@ INTO @object_name ,
 
 WHILE @@FETCH_STATUS = 0
   BEGIN
-    INSERT INTO [SQLMonitor].[dbo].[DW Running Counter]
+    INSERT INTO [dbo].[DW Running Counter]
            ([User Name]
            ,[Date and Time]
            ,[Running ID Batch]
@@ -1757,7 +1181,7 @@ INTO @object_name ,
 
 WHILE @@FETCH_STATUS = 0
   BEGIN
-    INSERT INTO [SQLMonitor].[dbo].[DW Running Counter]
+    INSERT INTO [dbo].[DW Running Counter]
            ([User Name]
            ,[Date and Time]
            ,[Running ID Batch]
