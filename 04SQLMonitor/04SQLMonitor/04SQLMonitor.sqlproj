@@ -60,5 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="SQLMonitorSchemaCreation.sql" />
+    <Build Include="SQLMonitorScheduleCreation.sql" />
   </ItemGroup>
 </Project>
