@@ -60,5 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="generateUserPermissions.sql" />
+    <Build Include="getLoginRoleUserPermissions.sql" />
   </ItemGroup>
 </Project>
