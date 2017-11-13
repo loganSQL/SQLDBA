@@ -61,5 +61,6 @@
   <ItemGroup>
     <Build Include="generateUserPermissions.sql" />
     <Build Include="getLoginRoleUserPermissions.sql" />
+    <Build Include="cloneUser.sql" />
   </ItemGroup>
 </Project>
