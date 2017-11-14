@@ -3,6 +3,8 @@
 
 	drop a login from a server without leaving any orphan associated users. 
 	first you have to iterate through all databases to drop the associated users where the login has access to
+
+	exec sp_MSdroploginanduser 'MYDomain\MyLogin'
 */
 
 use master
