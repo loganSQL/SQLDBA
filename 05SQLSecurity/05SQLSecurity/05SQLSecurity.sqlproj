@@ -63,4 +63,7 @@
     <Build Include="getLoginRoleUserPermissions.sql" />
     <Build Include="cloneUser.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="sp_MSdroploginanduser.sql" />
+  </ItemGroup>
 </Project>
