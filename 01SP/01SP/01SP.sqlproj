@@ -74,5 +74,9 @@
     <Build Include="showwaittype.sql" />
     <Build Include="SQL_ErrorLog_Alert.sql" />
     <Build Include="SQL_ErrorLog_Alert_Notify.sql" />
+    <Build Include="showversion.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="showport.sql" />
   </ItemGroup>
 </Project>
