@@ -37,6 +37,6 @@ FROM sys.procedures
 WHERE OBJECTPROPERTY(OBJECT_ID, 'ExecIsStartup') = 1
 go
 
-/* test it */
+/* test exec */
 exec recreateLinkserver
 go
