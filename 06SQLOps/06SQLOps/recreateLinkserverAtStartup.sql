@@ -12,7 +12,7 @@ go
 
 create procedure recreateLinkserver with encryption as
 begin
-IF  EXISTS (SELECT srv.name FROM sys.servers srv WHERE srv.server_id != 0 AND srv.name = N'OPTPROD') 
+IF  EXISTS (SELECT srv.name FROM sys.servers srv WHERE srv.server_id != 0 AND srv.name = N'MYPROD') 
 	EXEC master.dbo.sp_dropserver @server=N'MYPROD', @droplogins='droplogins'
 
 /****** Object:  LinkedServer [MYPROD]    Script Date: 09/15/2017 09:28:47 ******/
@@ -37,6 +37,6 @@ FROM sys.procedures
 WHERE OBJECTPROPERTY(OBJECT_ID, 'ExecIsStartup') = 1
 go
 
-
+/* test it */
 exec recreateLinkserver
 go
