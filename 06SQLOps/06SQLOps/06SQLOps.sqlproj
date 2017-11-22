@@ -61,5 +61,6 @@
   <ItemGroup>
     <None Include="BackupTableLabelHousekeep.sql" />
     <None Include="recreateLinkserverAtStartup.sql" />
+    <None Include="killUserConnections.sql" />
   </ItemGroup>
 </Project>
