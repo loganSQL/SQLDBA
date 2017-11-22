@@ -60,5 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="BackupTableLabelHousekeep.sql" />
+    <None Include="recreateLinkserverAtStartup.sql" />
   </ItemGroup>
 </Project>
