@@ -20,3 +20,9 @@ sudo apt-get update && sudo apt-get install azure-cli
 
 # Run the CLI from the command prompt with the az command.
 
+# test
+
+az --version
+
+az login
+
