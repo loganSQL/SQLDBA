@@ -51,7 +51,7 @@ Expand-Archive ~/Ubuntu.zip c:\logan\Ubuntu
 <#
 PS C:\Windows\system32> ls C:\logan\Ubuntu\
 
-
+ubu
     Directory: C:\logan\Ubuntu
 
 
@@ -70,7 +70,14 @@ d-----       2017-11-29   1:35 PM                images
 #>
 
 # 1.3. Run the installer
-ubuntu.exe
+## first time install
+ubuntu.exe 
+
+#or subsequently use
+bash
+
+#or Factory reset
+ubuntu clean
 
 # 1.4. Create a UNIX user
 logan 
@@ -101,6 +108,12 @@ ls /mnt/c/logan
 ls /mnt/c/Users/logan.chen/Documents/
 
 <#
+
+
+
+
 	To Unistall WSL
-	lxrun /uninstall /full
+lxrun /uninstall /full
+sc stop lxssmanager
+rmdir /S "\\?\%LOCALAPPDATA%\lxss"
 #>
