@@ -1,6 +1,6 @@
 ﻿#
 #
-#	Steps to test drive the Docker Windows Container
+#	Steps to test drive the Docker Containers
 #
 #
 #	Steps to setup dockers
@@ -11,11 +11,14 @@
 #	make sure hardware virtualization is enabled and Hyper-V is installed, lest the engine won’t start
 #	on windows cmd
 docker version
-docker image
+docker images
 
 #	Powershell on windows
-docker image
+docker images
 
+#######################################################
+#	Test drive Docker Linux Container from WSL
+#######################################################
 #	on WSL
 #	add these two lines to your .bashrc 
 PATH="$HOME/bin:$HOME/.local/bin:$PATH"
@@ -47,11 +50,19 @@ docker login
 logansql
 100U???
 
+
+#################################################
+#	Test drive Docker Windows Container
+################################################
 <#
 #	By default, Docker for windows 'Enable Linux containers on Window"
 #	To run Window container, untick this in Settings->General
 #>
 
+
+##################################
+#	Install Base Container Images
+##################################
 #	Windows Containers on Windows 10
 #	https://docs.microsoft.com/en-us/virtualization/windowscontainers/quick-start/quick-start-windows-10
 
