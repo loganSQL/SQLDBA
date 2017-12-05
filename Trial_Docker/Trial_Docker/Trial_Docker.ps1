@@ -98,3 +98,11 @@ docker run --rm helloworld powershell c:\helloworld.ps1
 #	Build a Sample App
 #	taking a sample ASP.net app and converting it to run in a container
 #########################################################################
+#
+#	https://docs.microsoft.com/en-us/virtualization/windowscontainers/quick-start/building-sample-app
+#
+cd C:\logan\test\SampleASPContainerApp
+
+git clone https://github.com/cwilhit/SampleASPContainerApp.git
+
+
