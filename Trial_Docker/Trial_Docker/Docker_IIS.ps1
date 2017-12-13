@@ -1,7 +1,7 @@
 #
 #	Steps to create and test a IIS container image and ways to transfer files into containers
 #	https://hub.docker.com/r/microsoft/iis/
-# Docker_IIS.psd1
+#	Docker_IIS.ps1
 #
 
 # 1. create a Dockerfile with following info

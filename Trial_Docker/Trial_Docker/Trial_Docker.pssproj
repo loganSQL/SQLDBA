@@ -28,7 +28,7 @@
   </PropertyGroup>
   <ItemGroup />
   <ItemGroup>
-    <Compile Include="Docker_IIS.psd1" />
+    <Compile Include="Docker_IIS.ps1" />
     <Compile Include="Trial_Docker.ps1" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
