@@ -1,5 +1,5 @@
 #
-#	Steps to create and test a IIS container image
+#	Steps to create and test a IIS container image and ways to transfer files into containers
 #	https://hub.docker.com/r/microsoft/iis/
 # Docker_IIS.psd1
 #
@@ -77,11 +77,34 @@ push-location ./site
 docker cp . Myiis:c:/inetpub/wwwroot
 pop-location
 docker start Myiis
-$ip = docker inspect -f "{{.NetworkSettings.Networks.nat.IPAddress}}" datatest1
+$ip = docker inspect -f "{{.NetworkSettings.Networks.nat.IPAddress}}" Myiis
 Start-Process -FilePath http://$ip
 
-# IE: http://172.20.44.18:8000/
-# check the page from IE
+# Technique 3: Mount a Volume
+# Rather than transferring our data into the container, we can make a folder on our local machine visible inside the container by mounting a volume.
+# We do this with the –v switch on the docker run command, specifying the local folder we want to mount, and the location in which it should appear on the container.
+#
+# First of all, the local path needs to be absolute, not relative, so I’m using Get-Location to get the current directory. 
+# And secondly, you can’t mount a volume on top of an existing folder (at least in Docker for Windows). 
+# So we sadly can’t overwrite wwwroot using this technique. But we could mount into a subfolder under wwwroot like this:
+docker run -d -p 80 -v "$((Get-Location).Path)\site:c:\inetpub\wwwroot\site" --name Myiis iis-site
+
+# Now the great thing is that we can simply modify our local HTML and refresh the browser and our changes are immediately visible.
+$ip = docker inspect -f "{{.NetworkSettings.Networks.nat.IPAddress}}" Myiis
+Start-Process -FilePath http://$ip/site
+
+# Technique 4: Use a Dockerfile
+# All this dockerfile is saying is that our base image is the Microsoft IIS nanoserver image from DockerHub, 
+# and then we want to copy the contents of our local 'site' directory into 'C:/inetpub/wwwroot'
+# Dockerfile
+FROM microsoft/iis:nanoserver
+COPY site C:/inetpub/wwwroot
+# With our dockerfile in place, we need to build an image with the docker build command
+docker build -t Myiis:v1 .
+docker run -d -p 80 --name Myiis Myiis:v1
+$ip = docker inspect -f "{{.NetworkSettings.Networks.nat.IPAddress}}" Myiis
+Start-Process -FilePath http://$ip
+
 
 # housekeep
 docker stop Myiis
