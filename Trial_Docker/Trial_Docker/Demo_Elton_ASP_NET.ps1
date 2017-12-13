@@ -96,7 +96,6 @@ docker-compose up -d
 # it will pull all the necessary Docker images to run this app
 # starts all eight Docker containers required for this application (they’re all Windows containers), 
 # and connects them together in a network so they can communicate with each other.
-docker compose up –d 
 docker ps
 
 # Test
