@@ -119,3 +119,5 @@ $ip = docker inspect -f '{{.NetworkSettings.Networks.nat.IPAddress}}' docker_kib
 $ip=$ip+':5601'
 Start-Process -FilePath http://$ip
 
+# To stop all containers
+docker stop $(docker ps -aq)
