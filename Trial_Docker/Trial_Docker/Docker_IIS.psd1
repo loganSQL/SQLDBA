@@ -47,7 +47,7 @@ Start-Process -FilePath http://$ip
 # HOW TO TRANSFER YOUR FILE INTO YOUR DOCKER FOR YOUR WINDOWS CONTAINERS
 #
 # Technique 1: Edit in the Container
-# connect to container view cmd
+# connect to container view cmd / powershell
 # go to the c:\Myiis folder
 # create a test page
 docker exec -i Myiis cmd
@@ -99,6 +99,7 @@ Start-Process -FilePath http://$ip/site
 # Dockerfile
 FROM microsoft/iis:nanoserver
 COPY site C:/inetpub/wwwroot
+
 # With our dockerfile in place, we need to build an image with the docker build command
 docker build -t Myiis:v1 .
 docker run -d -p 80 --name Myiis Myiis:v1
