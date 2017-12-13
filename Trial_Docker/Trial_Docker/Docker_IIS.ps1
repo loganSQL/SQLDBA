@@ -40,7 +40,9 @@ docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" Myiis
 
 #
 #	get an IIS container running, discover it’s IP address, and launch it in a browser
-#	then change to http://$ip:8000
+#	then change to http://$ip:8000 to get error because of no web page yet
+#	This will start the browser with the default page on C:\inetpub\wwwroot\iisstart.htm
+
 $ip = docker inspect -f "{{.NetworkSettings.Networks.nat.IPAddress}}" Myiis
 Start-Process -FilePath http://$ip
 
@@ -49,13 +51,14 @@ Start-Process -FilePath http://$ip
 # Technique 1: Edit in the Container
 # connect to container view cmd / powershell
 # go to the c:\Myiis folder
-# create a test page
+# create a test page, change http://$ip:8000
 docker exec -i Myiis cmd
 dir
+
 cd Myiis
 echo "Hello World From a Windows Server IIS Container" > C:\Myiis\index.html
 exit
-
+# 
 docker exec -it Myiis powershell
 echo "<html><body><h1>Hello World</h1></body></html>" > "C:\Myiis\index.html"
 exit
