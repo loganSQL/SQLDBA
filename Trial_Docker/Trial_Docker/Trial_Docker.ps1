@@ -174,3 +174,20 @@ ENTRYPOINT ["dotnet", "MvcMovie.dll"]
 docker build -t myasp .
 #	Run the container and give the container tag "myapp"
 docker run -d -p 5000:80 --name myapp myasp
+
+# Other commands
+
+# see all containers
+docker ps –a
+# to stop a running container
+docker stop
+# to remove a container
+docker rm 
+# see what images you have
+docker images
+# to remove one image
+docker rmi 
+# to list all volume
+docker volume ls 
+# to remove it
+docker volume rm
