@@ -46,6 +46,9 @@ docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" Myiis
 $ip = docker inspect -f "{{.NetworkSettings.Networks.nat.IPAddress}}" Myiis
 Start-Process -FilePath http://$ip
 
+$ip = $ip+':8000'
+Start-Process -FilePath http://$ip
+
 # HOW TO TRANSFER YOUR FILE INTO YOUR DOCKER FOR YOUR WINDOWS CONTAINERS
 #
 # Technique 1: Edit in the Container
