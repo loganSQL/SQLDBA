@@ -66,4 +66,7 @@
   <ItemGroup>
     <None Include="sp_MSdroploginanduser.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="StepToResetSAPwd.sql" />
+  </ItemGroup>
 </Project>
