@@ -28,6 +28,7 @@
   </PropertyGroup>
   <ItemGroup />
   <ItemGroup>
+    <Compile Include="Basic_Lab.ps1" />
     <Compile Include="Demo_Elton_ASP_NET.ps1" />
     <Compile Include="Docker_IIS.ps1" />
     <Compile Include="Trial_ASP_NET.ps1" />
