@@ -7,7 +7,7 @@
 /*
 
 
-One solution is to encrypt the sensitive data in the database and protect the keys that are used to encrypt the data with a certificate. 
+The solution here is to encrypt the sensitive data in the database and protect the keys that are used to encrypt the data with a certificate. 
 This prevents anyone without the keys from using the data, but this kind of protection must be planned in advance. 
 
 TDE performs real-time I/O encryption and decryption of the data and log files. The encryption uses a database encryption key (DEK), 
@@ -15,11 +15,13 @@ which is stored in the database boot record for availability during recovery.
 
 The DEK is a symmetric key secured by using a certificate stored in the master database of the server 
 or an asymmetric key protected by an EKM module. TDE protects data "at rest", meaning the data and log files. 
+(https://docs.microsoft.com/en-us/sql/relational-databases/security/sql-server-certificates-and-asymmetric-keys)
 
 It provides the ability to comply with many laws, regulations, and guidelines established in various industries. 
 This enables software developers to encrypt data by using AES and 3DES encryption algorithms without changing existing applications. 
 
-TDE does not provide encryption across communication channels. (https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/enable-encrypted-connections-to-the-database-engine)
+TDE does not provide encryption across communication channels. 
+(https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/enable-encrypted-connections-to-the-database-engine)
 
 Encryption of the database file is performed at the page level. The pages in an encrypted database are encrypted before they are written to disk and decrypted when read into memory. 
 TDE does not increase the size of the encrypted database. 
