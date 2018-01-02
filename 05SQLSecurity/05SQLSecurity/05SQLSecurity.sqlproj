@@ -62,6 +62,7 @@
     <Build Include="generateUserPermissions.sql" />
     <Build Include="getLoginRoleUserPermissions.sql" />
     <Build Include="cloneUser.sql" />
+    <Build Include="restoreTDEdatabase.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="sp_MSdroploginanduser.sql" />
