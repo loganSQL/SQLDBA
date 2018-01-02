@@ -1,7 +1,7 @@
 ﻿/*
 	Restore an encrypted database with Transparent Data Encryption
 	Ref: https://docs.microsoft.com/en-us/sql/relational-databases/security/encryption/transparent-data-encryption
-	Attn: https://simonmcauliffe.com/technology/tde/
+	Attn: be wared of the concerns!!! https://simonmcauliffe.com/technology/tde/
 
 */
 
