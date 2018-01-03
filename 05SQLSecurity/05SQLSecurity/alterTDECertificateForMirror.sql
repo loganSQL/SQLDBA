@@ -1,5 +1,6 @@
 ﻿/*
 	Steps to change the TDE certificate for database mirroring
+	https://social.msdn.microsoft.com/Forums/en-US/home?forum=sqlsecurity
 */
 /*
 Furthermore:
