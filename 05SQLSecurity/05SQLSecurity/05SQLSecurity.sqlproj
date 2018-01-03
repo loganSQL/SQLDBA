@@ -63,6 +63,7 @@
     <Build Include="getLoginRoleUserPermissions.sql" />
     <Build Include="cloneUser.sql" />
     <Build Include="restoreTDEdatabase.sql" />
+    <Build Include="createDBMirroring.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="sp_MSdroploginanduser.sql" />
