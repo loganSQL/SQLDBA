@@ -1,6 +1,7 @@
 ﻿/*
 	Steps to change the TDE certificate for database mirroring
 	https://social.msdn.microsoft.com/Forums/en-US/home?forum=sqlsecurity
+	https://www.mssqltips.com/sqlservertip/4796/fixing-sql-server-database-mirroring-expired-certificates/
 */
 /*
 Furthermore:
