@@ -31,6 +31,8 @@ msdb.dbo.backupset.backup_finish_date
 
 GO
 /*
+-- get the total backup size
+
 create view vwBackup
 as
 SELECT 
