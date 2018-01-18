@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="sp_MSdroploginanduser.sql" />
+    <None Include="DropSchemaPriorUser.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="StepToResetSAPwd.sql" />
