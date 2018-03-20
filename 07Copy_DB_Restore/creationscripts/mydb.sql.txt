@@ -1,0 +1,21 @@
+use master
+go
+
+CREATE DATABASE [mydb] ON  PRIMARY 
+( NAME = N'mydb_Data', FILENAME = N'D:\Databases\mydb.MDF' , SIZE = 10MB , MAXSIZE = UNLIMITED, FILEGROWTH = 10%)
+ LOG ON 
+( NAME = N'mydb_Log', FILENAME = N'E:\Databases\mydb.LDF' , SIZE = 1MB , MAXSIZE = UNLIMITED, FILEGROWTH = 10%)
+GO
+
+
+CREATE LOGIN [mydb] WITH PASSWORD=N'MyPwd', DEFAULT_DATABASE=[mydb], DEFAULT_LANGUAGE=[us_english], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF
+GO
+
+USE [mydb]
+GO
+
+CREATE USER [mydbuser] FOR LOGIN [mydbuser] WITH DEFAULT_SCHEMA=[dbo]
+GO
+
+ALTER ROLE [db_owner] ADD MEMBER [mydbuser]
+GO
