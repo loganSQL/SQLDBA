@@ -6,7 +6,7 @@ create procedure [dbo].[generateusersync] as
 -- only those users with the name as matched logins
 -- only for SQL Login LOGINPROPERTY(name,'IsLocked') is not NULL
 -- windows login supposed sync automaticall due to sid
-select 'ALTER USER ['+name+'] WITH  LOGIN =['+name+']'
+select 'ALTER USER ['+name+'] WITH  LOGIN =['+name+'], DEFAULT_SCHEMA=[dbo]'
 from sysusers
 where SUSER_ID(name) IS not NULL
 and (uid>4 and uid<100)
