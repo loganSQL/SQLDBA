@@ -1,17 +1,14 @@
-﻿/*
-	store procedure to generate a list of sp_change_users_login for user synchronization in a user database
-*/
+﻿if exists (select name from sysobjects where name='generateusersync' and type='P')
+	drop procedure generateusersync
+go
 
 create procedure [dbo].[generateusersync] as
-
---select 'EXEC sp_change_users_login ''Update_One'', ['+name+'], ['+name+']' from sysusers 
-
-declare @sqltext varchar(200)
-
-set @sqltext = 'select ''EXEC sp_change_users_login ''''Update_One'''', [''+name+''],[''+name+'']'' from sysusers where uid>4'
-
-print @sqltext
-
-
-
+-- only those users with the name as matched logins
+-- only for SQL Login LOGINPROPERTY(name,'IsLocked') is not NULL
+-- windows login supposed sync automaticall due to sid
+select 'ALTER USER ['+name+'] WITH  LOGIN =['+name+']'
+from sysusers
+where SUSER_ID(name) IS not NULL
+and (uid>4 and uid<100)
+and LOGINPROPERTY(name,'IsLocked') is not NULL
 GO
