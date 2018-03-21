@@ -1,0 +1,10 @@
+USE [master]
+GO
+
+CREATE DATABASE [MyDB] ON  PRIMARY 
+( NAME = N'MyDB_Data', FILENAME = N'D:\Databases\MyDB.mdf' , SIZE = 50MB , MAXSIZE = UNLIMITED, FILEGROWTH = 10%)
+ LOG ON 
+( NAME = N'MyDB_Log', FILENAME = N'E:\Databases\MyDB.ldf' , SIZE = 5MB , MAXSIZE = UNLIMITED, FILEGROWTH = 10%)
+GO
+
+
