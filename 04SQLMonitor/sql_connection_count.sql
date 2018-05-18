@@ -73,25 +73,31 @@ select count(*) as sessions,
    order by count(*) desc;
 
 -- get the suspected highest count host_process_id for inverstigation
-declare @host_process_id varchar(20) = 1748;
-  declare @host_name sysname = N'My_Host';
-  --declare @database_name sysname = N'My_Database';
+-- fingerprint on SQL Server
+declare @host_process_id varchar(20) = 2504;
+declare @host_name sysname = N'My_Host';
+--declare @database_name sysname = N'My_Database';
  
-  select datediff(minute, s.last_request_end_time, getdate()) as minutes_asleep,
-         s.session_id,
-         --db_name(s.database_id) as database_name,
-         s.host_name,
-         s.host_process_id,
-         t.text as last_sql,
-         s.program_name
-    from sys.dm_exec_connections c
-    join sys.dm_exec_sessions s
-         on c.session_id = s.session_id
-   cross apply sys.dm_exec_sql_text(c.most_recent_sql_handle) t
-   where s.is_user_process = 1
-         and s.status = 'sleeping'
-         --and db_name(s.database_id) = @database_name
-         and s.host_process_id = @host_process_id
-         and s.host_name = @host_name
-         and datediff(second, s.last_request_end_time, getdate()) > 60
-   order by s.last_request_end_time;
+select datediff(minute, s.last_request_end_time, getdate()) as minutes_asleep,
+        s.session_id,
+        --db_name(s.database_id) as database_name,
+        s.host_name,
+        s.host_process_id,
+        t.text as last_sql,
+        s.program_name, s.login_name
+from sys.dm_exec_connections c
+join sys.dm_exec_sessions s
+        on c.session_id = s.session_id
+cross apply sys.dm_exec_sql_text(c.most_recent_sql_handle) t
+where s.is_user_process = 1
+        and s.status = 'sleeping'
+        --and db_name(s.database_id) = @database_name
+        and s.host_process_id = @host_process_id
+        and s.host_name = @host_name
+        and datediff(second, s.last_request_end_time, getdate()) > 60
+order by s.last_request_end_time;
+
+/*
+	fingerprint on Active Directory: 
+	.\PsLoggedon.exe \\My_Host
+*/
