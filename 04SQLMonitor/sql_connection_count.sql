@@ -74,7 +74,7 @@ select count(*) as sessions,
 
 -- get the suspected highest count host_process_id for inverstigation
 declare @host_process_id varchar(20) = 1748;
-  declare @host_name sysname = N'CALFN-P122';
+  declare @host_name sysname = N'My_Host';
   --declare @database_name sysname = N'My_Database';
  
   select datediff(minute, s.last_request_end_time, getdate()) as minutes_asleep,
