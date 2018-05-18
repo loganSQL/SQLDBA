@@ -3,7 +3,7 @@
 
 		MSSQL-IOCollector v4.3
 
-		This light-weight script connects to MSSQL instances and gathers information for analysis by Delphix Professional Services.
+		This light-weight script connects to MSSQL instances and gathers information for analysis.
 		Use get-help MSSQL-IOCollector.ps1 -detailed to learn more
 		Tab completion is your friend
 
@@ -723,7 +723,7 @@ function Compress-Folder {
     [System.IO.Compression.ZipFile]::CreateFromDirectory($outputPath, $zipFile, $CompressionLevel, $IncludeParentDir)
 }
 
-function UploadTo-Delphix {
+function UploadTo-MySite {
     Param(
 		[Parameter(Mandatory=$false)]$email
 	)
@@ -740,7 +740,7 @@ function UploadTo-Delphix {
 	
 	$zipFileName = Split-Path -Path $ZipFile -Leaf
 
-	$UploadSite = "https://upload.delphix.com" # Prod upload
+	$UploadSite = "https://upload.mysite.com" # Prod upload
 	# $UploadSite = "http://dlpx-upload-test.herokuapp.com" # Test Upload
 
 	#write-verbose "dbtype: $($dbtype), `nCompanyName: $($companyname) `nPWD: $($PWD) `nOut: $($OutputPath) `nZip: $($Zipfile)"
@@ -758,7 +758,7 @@ function UploadTo-Delphix {
 	$uploadresults = Invoke-RestMethod -Uri $url -Infile $ZipFile -Method Post -ContentType "application/octet-stream"
 
 	if ($error) {
-		write-warning "Automated upload seems to have failed; please email the ZIP file to Delphix manually."
+		write-warning "Automated upload seems to have failed; please email the ZIP file to MySite manually."
 		exit
 	} else { write-verbose "Upload Results $($uploadresults)" }
 }
