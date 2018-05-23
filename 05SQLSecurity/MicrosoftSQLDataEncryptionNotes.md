@@ -16,7 +16,7 @@ Cell-level has been around for a while and lets you encrypt individual columns. 
 
 Introduced in SQL Server 2008, TDE encrypts the entire database, including the log files. The data is encrypted when it is written to disk and decrypted when being read from disk. The entire process is transparent to the clients and requires no special coding. TDE is generally recommended for its performance benefits and ease of implementation. If you need a more granular approach or are working with SQL Server 2005 or earlier, then go with cell-level encryption.
 
-### SQL Server Data Encryption In Motion (Client Connections)
+### SQL Server Data Encryption In Motion (Sessions / Connections)
 SQL Server can also use the Secure Sockets Layer (SSL) protocol to encrypt data transmitted over the network whether between SQL Server instances or between SQL Server and a client application. In this way, data can be protected throughout a session, making it possible to pass sensitive information over a network. Of course, SSL doesn’t protect data at rest, but when combined with TDE or cell-level encryption, data can be protected at every stage.
 
 ### SQL Server Key Management
