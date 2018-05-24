@@ -1,4 +1,4 @@
-# Microsoft SQL Encrypting Connections Note
+# Microsoft SQL Connections Encryption Note
 
 ## Encrypting connections
 
@@ -144,4 +144,4 @@ Although the server doesn't enforce the connection encryption, clients can still
 * [Microsoft Docs: Enable Encrypted Connections to the Database Engine](https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/enable-encrypted-connections-to-the-database-engine?view=sql-server-2017)
 * [MSDN: SqlConnection.ConnectionString Property](<https://msdn.microsoft.com/en-us/library/system.data.sqlclient.sqlconnection.connectionstring(v=vs.110).aspx>)
 * [Microsoft Docs: Connection String Syntax](<https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/connection-string-syntax>)
-* [How to set and use encrypted SQL Server connections](<https://www.sqlshack.com/how-to-set-and-use-encrypted-sql-server-connections/>)* 
+* [How to set and use encrypted SQL Server connections](<https://www.sqlshack.com/how-to-set-and-use-encrypted-sql-server-connections/>)* * 
