@@ -1,4 +1,4 @@
-# Encrypting Connections to SQL Server Note
+# Microsoft SQL Encrypting Connections Note
 
 ## Encrypting connections
 
