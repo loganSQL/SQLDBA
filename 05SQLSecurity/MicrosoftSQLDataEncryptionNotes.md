@@ -25,7 +25,8 @@ An important component of any encryption strategy is key management. Without goi
 ## SQL Server Encryption References
 * [Microsoft Docs: SQL Server Encryption Hierarchy](https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2008-r2/ms189586(v%3dsql.105))
 * [Microsoft Docs: Understanding Transparent Data Encryption (TDE)](<https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2008-r2/bb934049(v%3dsql.105)>)
-
+* [Microsoft SQL Transparent Data Encryption Notes](<https://github.com/loganSQL/SQLDBA/blob/master/05SQLSecurity/MicrosoftTDENotes.md>)
+* [Microsoft SQL Connection Encryption Notes](<https://github.com/loganSQL/SQLDBA/blob/master/05SQLSecurity/EncryptingConnectionsToSQLServerNote.md>)
 
 ## Challenges to Microsoft SQL TDE
 Simon McAuliffe wrote a piece about how to break TDE(
