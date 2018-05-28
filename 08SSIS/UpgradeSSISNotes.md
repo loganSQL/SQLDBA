@@ -82,3 +82,160 @@ Pwd Hints: 100U
 * [SQL Server Agent Jobs for Packages](<https://docs.microsoft.com/en-us/sql/integration-services/packages/sql-server-agent-jobs-for-packages?view=sql-server-2017>)
 ## 6. Backup, Restore, and Move the SSIS Catalog
 [Backup, Restore, and Move the SSIS Catalog](<https://msdn.microsoft.com/en-us/library/hh213291(v=sql.120).aspx>)
+
+## 7. Import/Export projects to/from SSIS catelog
+[Import/Export projects to/from SSIS catelog](<https://gallery.technet.microsoft.com/scriptcenter/ImportExport-projects-bca5f29f>)
+
+Import/Export folders and projects from/to local file system to/from SSIS catalog.
+
+### 7.1 Import  
+Import SSIS projects from $ProjectFilePath. The folders under $ProjectFilePath will be imported as folders in the SSIS catalog, with all ispac files under that folder imported accordingly. 
+
+The script will connect to the local SQL Server instance. It will first drop the SSISDB catalog if exists and create a new catalog with a fixed secret. 
+```
+<#  
+.SYNOPSIS  
+    Import folders and projects from local file system to SSIS catalog.  
+.DESCRIPTION  
+    Import SSIS projects from $ProjectFilePath. The folders under $ProjectFilePath 
+    will be imported as folders in the SSIS catalog, with all ispac files under that 
+    folder imported accordingly.  
+     
+    The script will connect to the local SQL Server instance. It will first 
+    drop the SSISDB catalog if exists and create a new catalog with a fixed secret.  
+.EXAMPLE  
+    .\CatalogImport  
+#>  
+ 
+# Variables 
+$ProjectFilePath = "C:\SSIS" 
+ 
+# Load the IntegrationServices Assembly 
+[System.Reflection.Assembly]::LoadWithPartialName("Microsoft.SqlServer.Management.IntegrationServices") | Out-Null; 
+ 
+# Store the IntegrationServices Assembly namespace to avoid typing it every time 
+$ISNamespace = "Microsoft.SqlServer.Management.IntegrationServices" 
+ 
+Write-Host "Connecting to server ..." 
+ 
+# Create a connection to the server 
+$sqlConnectionString = "Data Source=localhost;Initial Catalog=master;Integrated Security=SSPI;" 
+$sqlConnection = New-Object System.Data.SqlClient.SqlConnection $sqlConnectionString 
+ 
+# Create the Integration Services object 
+$integrationServices = New-Object $ISNamespace".IntegrationServices" $sqlConnection 
+ 
+Write-Host "Removing previous catalog ..." 
+ 
+# Drop the existing catalog if it exists 
+if ($integrationServices.Catalogs.Count -gt 0) { $integrationServices.Catalogs["SSISDB"].Drop() } 
+ 
+Write-Host "Creating new SSISDB Catalog ..." 
+ 
+# Provision a new SSIS Catalog 
+$catalog = New-Object $ISNamespace".Catalog" ($integrationServices, "SSISDB", "SUPER#secret1") 
+$catalog.Create() 
+ 
+write-host "Enumerating all folders..." 
+ 
+$folders = ls -Path $ProjectFilePath -Directory 
+ 
+if ($folders.Count -gt 0) 
+{ 
+    foreach ($filefolder in $folders) 
+    { 
+        Write-Host "Creating Folder " $filefolder.Name " ..." 
+ 
+        # Create a new folder 
+        $folder = New-Object $ISNamespace".CatalogFolder" ($catalog, $filefolder.Name, "Folder description") 
+        $folder.Create() 
+ 
+        $projects = ls -Path $filefolder.FullName -File -Filter *.ispac 
+        if ($projects.Count -gt 0) 
+        { 
+            foreach($projectfile in $projects) 
+            { 
+                $projectfilename = $projectfile.Name.Replace(".ispac", "") 
+                Write-Host "Deploying " $projectfilename " project ..." 
+ 
+                # Read the project file, and deploy it to the folder 
+                [byte[]] $projectFileContent = [System.IO.File]::ReadAllBytes($projectfile.FullName) 
+                $folder.DeployProject($projectfilename, $projectFileContent) 
+            } 
+        } 
+    } 
+} 
+ 
+Write-Host "All done."
+```
+### 7.2 Export
+Export SSIS projects from the catalog to $ProjectFilePath. Folders in the catalog will be exported as folders in the file system, and projects will be exported as *.ispac files. 
+
+Environments will not be exported.
+```
+<#  
+.SYNOPSIS  
+    Export folders and projects from SSIS catalog to local file system.  
+.DESCRIPTION  
+    Export SSIS projects from the catalog to $ProjectFilePath. Folders in the 
+    catalog will be exported as folders in the file system, and projects will 
+    be exported as *.ispac files.  
+     
+    Environments will not be exported.  
+.EXAMPLE  
+    .\CatalogExport  
+#>  
+ 
+# Variables 
+$ProjectFilePath = "E:\scripts\ssisiodump" 
+ 
+# Load the IntegrationServices Assembly 
+[System.Reflection.Assembly]::LoadWithPartialName("Microsoft.SqlServer.Management.IntegrationServices") | Out-Null; 
+ 
+# Store the IntegrationServices Assembly namespace to avoid typing it every time 
+$ISNamespace = "Microsoft.SqlServer.Management.IntegrationServices" 
+ 
+Write-Host "Connecting to server ..." 
+ 
+# Create a connection to the server 
+$sqlConnectionString = "Data Source=localhost;Initial Catalog=master;Integrated Security=SSPI;" 
+$sqlConnection = New-Object System.Data.SqlClient.SqlConnection $sqlConnectionString 
+ 
+# Create the Integration Services object 
+$integrationServices = New-Object $ISNamespace".IntegrationServices" $sqlConnection 
+ 
+if ($integrationServices.Catalogs.Count -gt 0)  
+{  
+    $catalog = $integrationServices.Catalogs["SSISDB"] 
+ 
+    write-host "Enumerating all folders..." 
+ 
+    $folders = $catalog.Folders 
+ 
+    if ($folders.Count -gt 0) 
+    { 
+        foreach ($folder in $folders) 
+        { 
+            $foldername = $folder.Name 
+            Write-Host "Exporting Folder " $foldername " ..." 
+ 
+            # Create a new file folder 
+            mkdir $ProjectFilePath"\"$foldername 
+ 
+            # Export all projects 
+            $projects = $folder.Projects 
+            if ($projects.Count -gt 0) 
+            { 
+                foreach($project in $projects) 
+                { 
+                    $fullpath = $ProjectFilePath + "\" + $foldername + "\" + $project.Name + ".ispac" 
+                    Write-Host "Exporting to " $fullpath "  ..." 
+                    [System.IO.File]::WriteAllBytes($fullpath, $project.GetProjectBytes()) 
+                } 
+            } 
+        } 
+    } 
+} 
+ 
+Write-Host "All done."
+```
