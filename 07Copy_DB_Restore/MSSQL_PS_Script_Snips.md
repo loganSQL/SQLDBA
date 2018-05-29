@@ -83,7 +83,7 @@ Set-Location SQLSERVER:\SQL\"myserver\myinstance"\Databases\"DBA"\Tables
 $ServerName = Invoke-Sqlcmd -query "SELECT @@ServerName" 
 $timestamp = Get-Date -Format yyyy-MM
 
-$bcpoptions = '-T'
+$bcpoptions = '-E -T'
 
 $TableList = Invoke-Sqlcmd -query "select name from DBA..sysobjects (nolock) where name like 'MyTablePrefix%' and type = 'U'" 
 
