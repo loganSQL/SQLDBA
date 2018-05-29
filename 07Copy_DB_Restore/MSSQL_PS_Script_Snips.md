@@ -67,4 +67,32 @@ foreach ($database in (Get-ChildItem)) {
      Backup-SqlDatabase -Database $dbName -BackupFile "\\mainserver\databasebackup\$dbName.bak" }
 ```
 
+### Simple BCP
+```
+$database = "DBA"
+$schema = "dbo"
+$table = "disk_usages_size"
+$filename = "C:\logan\Temp\disk_usages_size.txt"
 
+$bcp = "bcp $($database).$($schema).$($table) out $filename -T -c"
+Invoke-Expression $bcp
+```
+### BCP a list of tables
+```
+Set-Location SQLSERVER:\SQL\"myserver\myinstance"\Databases\"DBA"\Tables
+$ServerName = Invoke-Sqlcmd -query "SELECT @@ServerName" 
+$timestamp = Get-Date -Format yyyy-MM
+
+$bcpoptions = '-T'
+
+$TableList = Invoke-Sqlcmd -query "select name from DBA..sysobjects (nolock) where name like 'MyTablePrefix%' and type = 'U'" 
+
+foreach($item in $TableList) {
+  $table = $item.name
+  $Query = 'select * from DBA.dbo.' + $table
+  #...
+
+  $Target = "\\"+$ServerName.Column1 + '\E$\Backup' + $table + '_' + $timestamp + '.txt'
+
+  bcp $Query  QUERYOUT $Target -n $bcpOptions -S $ServerName.Column1 }
+```
