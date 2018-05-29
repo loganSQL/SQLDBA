@@ -29,6 +29,15 @@ foreach ($database in (Get-ChildItem "SQLSERVER:\SQL\$($MyHost)\Default\Database
      Backup-SqlDatabase -ServerInstance $MyHost -Database $dbName  -BackupFile $bakfile}
 ```
 
+### Archive and Compress
+
+```
+# to generate the backup folder
+E:\scripts\backup.ps1
+$bakdir="E:\backup\MyHost\MyDir"
+$bakname=$bakdir+"_"+(Get-Date -Format yyyy_MM_dd_HHmmss_ffffff)+".bak"
+compress-archive -Path $bakdir -DestinationPath $bakname -Force
+```
 
 ### Navigate SQLServer Drive in PS
 ```
