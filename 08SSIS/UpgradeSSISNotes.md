@@ -13,7 +13,7 @@ Compiled and Documented By Logan
 [Create the SSIS Catalog on SQL 2016](<https://msdn.microsoft.com/en-us/library/gg471509(v=sql.120).aspx>)
 
 Remember run SSMS as a administrator!!
-Pwd Hints: 100U
+100U
 
 ### 2.2. To create the SSISDB catalog programmatically
 
