@@ -47,3 +47,110 @@ INNER JOIN dbo.ReportSchedule R ON S.SubscriptionID = R.SubscriptionID
 INNER JOIN msdb.dbo.sysjobs J ON Convert(nvarchar(128),R.ScheduleID) = J.name
 INNER JOIN msdb.dbo.sysjobschedules JS ON J.job_id = JS.job_id
 go
+```
+### Detail of Catalog
+```
+SELECT
+[ItemID]
+,[Path]
+,[Name]
+,[ParentID]
+,[Type]
+,[Hidden]
+,[Content]
+,[Intermediate]
+,[SnapshotDataID]
+,[LinkSourceID]
+,[Property]
+,[Description]
+,[CreatedByID]
+,[CreationDate]
+,[ModifiedByID]
+,[ModifiedDate]
+,[MimeType]
+,[SnapshotLimit]
+,[Parameter]
+,[PolicyID]
+,[PolicyRoot]
+FROM
+[dbo].[Catalog]
+ 
+where Type= 2
+/*
+Type Name
+1 Folder
+2 Report
+3 Resource
+4 Linked Report
+5 Data Source
+6 Report Model
+8 Datasets
+9 ReportParts */
+```
+### Execution
+#### ExecutionLog config 
+```
+SELECT
+[ConfigInfoID]
+,[Name]
+,[Value]
+FROM [dbo].[ConfigurationInfo]
+where Name like '%Execution%'
+```
+### ExecutionLog (last 60 daysReportServer->Views->dbo.ExecutionLog,2,3)
+```
+-- last 60 days executionLog
+SELECT
+[InstanceName]
+,[ReportID]
+,[UserName]
+,[RequestType]
+,[Format]
+,[Parameters]
+,[TimeStart]
+,[TimeEnd]
+,[TimeDataRetrieval]
+,[TimeProcessing]
+,[TimeRendering]
+,[Source]
+,[Status]
+,[ByteCount]
+,[RowCount]
+FROM [dbo].[ExecutionLog]
+```
+```
+--Reports not listed here were not executed within the last 60 days
+SELECT
+[ItemID]
+,[Path]
+,[Name]
+,[ParentID]
+,[Type]
+,[Hidden]
+,[Content]
+,[Intermediate]
+,[SnapshotDataID]
+,[LinkSourceID]
+,[Property]
+,[Description]
+,[CreatedByID]
+,[CreationDate]
+,[ModifiedByID]
+,[ModifiedDate]
+,[MimeType]
+,[SnapshotLimit]
+,[Parameter]
+,[PolicyID]
+,[PolicyRoot]
+FROM [dbo].[Catalog]
+where Type = 2
+and ItemId not in (Select ReportId from dbo.ExecutionLog)
+---
+```
+```
+-- Hide these reports
+UPDATE [dbo].[Catalog]
+SET Hidden = 'true'
+WHERE Type = 2 and
+ItemId not in (Select ReportId from dbo.ExecutionLog)
+```
