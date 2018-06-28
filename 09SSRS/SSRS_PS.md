@@ -177,3 +177,42 @@ Start-Sleep -s 6 # slight delay in processing so ListSubscription returns the up
 $subscriptions = $rs2010.ListSubscriptions($site);   
 $subscriptions | select Status, Path, report, Description, Owner, SubscriptionID, EventType, lastexecuted | where {$_.SubscriptionID -eq $subscriptionid}
 ```
+### Script: Security Auditing
+```
+# Name: SSRSSecurityAuditReport.ps1
+# Synopsis:   List out all SSRS (native mode) folders & their security policies & output dataset to CSV file
+# Syntax: .\SSRSSecurityAuditReport.ps1 "server"
+
+Param(  
+  [string]$server
+  )
+# Clear-Host 
+$ReportServerUri = New-WebServiceProxy -Uri "http://$server/reportserver/ReportService2010.asmx" -Namespace SSRS.ReportingService2010 -UseDefaultCredential ;  
+$InheritParent = $true
+$SSRSroot = "/"
+$rsPerms = @()
+$rsResult = @()
+ 
+#List out all subfolders under the parent directory and Select their "Path"
+$folderList = $rsProxy.ListChildren($SSRSroot, $InheritParent) | Select -Property Path, TypeName | Where-Object {$_.TypeName -eq "Folder"} | Select Path
+#Iterate through every folder 
+foreach($folder in $folderList)
+{
+  #Return all policies on this folder
+  $Policies = $rsProxy.GetPolicies( $folder.Path, [ref] $InheritParent )
+  #For each policy, add details to an array
+  foreach($rsPolicy in $Policies)
+  {
+    [array]$rsResult = New-Object PSObject -Property @{
+    "Path" = $folder.Path;
+    "GroupUserName" = $rsPolicy.GroupUserName;
+    "Role" = $rsPolicy.Roles[0].Name
+    }
+    $rsPerms += $rsResult
+  }
+}
+#Output array to csv named after instance URL    
+$CSVFile=$server+"_SSRS_security_audit.csv"
+$rsPerms | Export-Csv -Path $CSVFile -NoTypeInformation
+ls $CSVFile
+```
