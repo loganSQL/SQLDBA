@@ -220,7 +220,12 @@ if ($integrationServices.Catalogs.Count -gt 0)
             Write-Host "Exporting Folder " $foldername " ..." 
  
             # Create a new file folder 
-            mkdir $ProjectFilePath"\"$foldername 
+            # mkdir $ProjectFilePath"\"$foldername 
+            $newfolder=$ProjectFilePath+"\"+$foldername 
+            If(!(test-path $newfolder))
+            {
+                New-Item -ItemType Directory -Force -Path $newfolder
+            }
  
             # Export all projects 
             $projects = $folder.Projects 
@@ -238,4 +243,11 @@ if ($integrationServices.Catalogs.Count -gt 0)
 } 
  
 Write-Host "All done."
+```
+### Job Step Catalog Backup in Powershell
+```
+E:\scripts\SSISCatalogExport.ps1
+$bakdir="E:\backup\MyHost\ssiscatalogdump"
+$bakname=$bakdir+"-"+(get-date -format "yyyy-MM-dd")+".bak"
+compress-archive -Path E:\scripts\ssiscatalogdump -DestinationPath $bakname -Force
 ```
