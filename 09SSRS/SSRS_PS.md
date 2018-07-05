@@ -2,7 +2,7 @@
 ### PowerShell : ReportingServicesTools
 
 * GitHub Project: https://github.com/Microsoft/ReportingServicesTools
-* PowerShell Gallery: ***ReportingServicesTools***
+* PS Gallery: ***ReportingServicesTools***
 * Installation of latest copy:
 ```
 # PowerShell Gallery will host the latest stable version of our scripts
