@@ -246,8 +246,10 @@ Write-Host "All done."
 ```
 ### 7.3 Job Step Catalog Backup By Using Export in Powershell
 ```
+# run SSISCatalogExport.ps to export SSIS Catalog folders to E:\scripts\ssiscatalogdump
 E:\scripts\SSISCatalogExport.ps1
 $bakdir="E:\backup\MyHost\ssiscatalogdump"
 $bakname=$bakdir+"-"+(get-date -format "yyyy-MM-dd")+".bak"
+# zip them to bakdir
 compress-archive -Path E:\scripts\ssiscatalogdump -DestinationPath $bakname -Force
 ```
