@@ -244,7 +244,7 @@ if ($integrationServices.Catalogs.Count -gt 0)
  
 Write-Host "All done."
 ```
-### Job Step Catalog Backup in Powershell
+### 7.3 Job Step Catalog Backup By Using Export in Powershell
 ```
 E:\scripts\SSISCatalogExport.ps1
 $bakdir="E:\backup\MyHost\ssiscatalogdump"
