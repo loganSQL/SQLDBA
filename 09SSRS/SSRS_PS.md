@@ -1,4 +1,23 @@
 ## SSRS Powershell Scripts
+### PowerShell : ReportingServicesTools
+
+* GitHub Project: https://github.com/Microsoft/ReportingServicesTools
+* PowerShell Gallery: ReportingServicesTools 
+* Installation of latest copy:
+```
+# PowerShell Gallery will host the latest stable version of our scripts
+Install-Module -Name ReportingServicesTools
+```
+* Installation of development/test beta
+```
+# downloading the development/beta version of our scripts
+Invoke-Expression (Invoke-WebRequest https://aka.ms/rstools)
+```
+* Help
+```
+# get a list of all functions: wrapping all functions into a signle PS module
+Get-Command -Module ReportingServicesTools
+```
 
 ### Script: List the ownership of all subscriptions
 ```
