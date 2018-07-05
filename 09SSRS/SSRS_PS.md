@@ -2,7 +2,7 @@
 ### PowerShell : ReportingServicesTools
 
 * GitHub Project: https://github.com/Microsoft/ReportingServicesTools
-* PowerShell Gallery: ReportingServicesTools 
+* PowerShell Gallery: ***ReportingServicesTools***
 * Installation of latest copy:
 ```
 # PowerShell Gallery will host the latest stable version of our scripts
@@ -18,6 +18,7 @@ Invoke-Expression (Invoke-WebRequest https://aka.ms/rstools)
 # get a list of all functions: wrapping all functions into a signle PS module
 Get-Command -Module ReportingServicesTools
 ```
+* Blog: <https://blogs.msdn.microsoft.com/sqlrsteamblog/2016/11/07/community-contributions-to-the-powershell-scripts-for-reporting-services/>
 
 ### Script: List the ownership of all subscriptions
 ```
