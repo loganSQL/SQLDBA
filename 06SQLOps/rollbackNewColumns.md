@@ -76,7 +76,7 @@ WHERE
 
 -- 5. Generate drop columns SQL
 
-SELECT 'ALTER TABLE [dbo].[MerlinOptimusBridgeStaging_ErrorRows] DROP COLUMN '+COLUMN_NAME
+SELECT 'ALTER TABLE [dbo].[MyTable] DROP COLUMN '+COLUMN_NAME
 --select COLUMN_NAME, *
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE 
