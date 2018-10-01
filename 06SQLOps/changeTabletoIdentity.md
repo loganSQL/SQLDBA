@@ -1,4 +1,4 @@
-# changeTabletoIdentity
+# How to Change a Table Column to Identity
 
 The following script demonstrates how to change table Test (without identity field <id>) to Test2 (with identity field <id>) by using partition SWITCH for schema swapping. 
 
