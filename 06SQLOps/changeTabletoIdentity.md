@@ -2,7 +2,7 @@
 
 The following script demonstrates how to change table Test (without identity field <id>) to Test2 (with identity field <id>) by using partition SWITCH for schema swapping. 
 
-This method works well when you have millions of records inside the table. There will no data movement at all.
+This method works well when you have millions of records inside the table. There will be no data movement at all.
 
 ```
 use tempdb
