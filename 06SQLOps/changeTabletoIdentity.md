@@ -19,7 +19,7 @@ INSERT INTO Test VALUES (1,'Hello');
 INSERT INTO Test VALUES (2,'World');
 go
 
--- copy the table. use same schema, but no identity
+-- copy the table. use same schema, but with identity
 CREATE TABLE Test2
 (
    id int identity(1,1),
