@@ -21,12 +21,12 @@ GO
 ```
 -- some subnets on the white list for testing
 -- 
-insert into [dbo].[wl_subnet]([wl_network]) values ('172.16.101.0/24')
-insert into [dbo].[wl_subnet]([wl_network]) values ('172.16.102.0/24')
-insert into [dbo].[wl_subnet]([wl_network]) values ('172.16.102.0/24')
-insert into [dbo].[wl_subnet]([wl_network]) values ('172.16.103.0/24')
-insert into [dbo].[wl_subnet]([wl_network]) values ('172.16.104.0/24')
-insert into [dbo].[wl_subnet]([wl_network]) values ('172.16.105.0/24')
+insert into [dbo].[wl_subnet]([wl_network]) values ('192.16.101.0/24')
+insert into [dbo].[wl_subnet]([wl_network]) values ('192.16.102.0/24')
+insert into [dbo].[wl_subnet]([wl_network]) values ('192.16.102.0/24')
+insert into [dbo].[wl_subnet]([wl_network]) values ('192.16.103.0/24')
+insert into [dbo].[wl_subnet]([wl_network]) values ('192.16.104.0/24')
+insert into [dbo].[wl_subnet]([wl_network]) values ('192.16.105.0/24')
 
 --
 insert into [dbo].[wl_subnet]([wl_network]) values ('10.16.101.0/24')
@@ -62,7 +62,7 @@ SQL Server cannot do a bitwise and between 2 binary numbers unfortunately, but i
 -- To test an ip in WhiteList
 -- For Example
 --    select  dbo.fnIsIPinWhiteList('192.168.0.1')
---    select  dbo.fnIsIPinWhiteList('172.16.103.12')
+--    select  dbo.fnIsIPinWhiteList('192.16.103.12')
 
 /*
 SELECT dbo.fnIsIpaddressInSubnetShorthand('192.168.2.0/24','192.168.3.91')
