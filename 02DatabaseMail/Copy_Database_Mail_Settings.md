@@ -1,4 +1,4 @@
-# Script to Copy Database Email Profil
+# Script to Copy Database Email Profile
 
 [Script to Scipt out EXISTING database mail settings](<https://gallery.technet.microsoft.com/scriptcenter/Script-to-Scipt-out-14a19eda>)
 
