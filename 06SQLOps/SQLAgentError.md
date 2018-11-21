@@ -1,5 +1,6 @@
 ## SQL Agent Error
 
+[SQL Agent Error the CmdExec subsystem failed to load](<https://www.mssqltips.com/sqlservertip/2488/sql-agent-error-the-cmdexec-subsystem-failed-to-load/>)
 ```
 sp_configure "allow updates", 1 
 reconfigure with override 
