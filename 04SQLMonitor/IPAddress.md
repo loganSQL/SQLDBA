@@ -16,6 +16,6 @@ Get-NetIPAddress | Format-Table
 
 ## To get ipv4
 ```
--- look
+-- look for DNSDomain
 get-WmiObject Win32_NetworkAdapterConfiguration|Where {$_.Ipaddress.length -gt 1} |format-table
 ```
