@@ -116,15 +116,9 @@ BEGIN
     /*
       -- just keep an violation record into tempdb
       insert into tempdb.[dbo].[wl_violation]([LoginName],[HostName],[HostIpAddress],[AppName],[Pass])
-      values (
-        @LoginName
-        ,@HostName
-        ,@HostIpAddress
-        ,@AppName,
-        0
-      )
+      values (@LoginName,@HostName,@HostIpAddress,@AppName,0)
    */
-      -- directly kick out the connection
+      -- or directly kick out the connection
       rollback
     end
   end
