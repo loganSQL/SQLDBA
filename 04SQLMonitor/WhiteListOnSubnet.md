@@ -145,6 +145,7 @@ go
 
 ## T-SQL functions
 [Reference: Datatype for storing ip address in SQL Server](https://stackoverflow.com/questions/1385552/datatype-for-storing-ip-address-in-sql-server)
+
 To determine if an ip address is in a subnet
 1) convert the network address, subnet mask and test address to binary.
 
