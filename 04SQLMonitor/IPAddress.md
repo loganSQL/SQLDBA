@@ -14,7 +14,7 @@ ipconfig | findstr /i "ipv4"
 Get-NetIPAddress | Format-Table
 ```
 
-## To get ipv4
+## WMI
 ```
 -- look for DNSDomain
 get-WmiObject Win32_NetworkAdapterConfiguration|Where {$_.Ipaddress.length -gt 1} |format-table
