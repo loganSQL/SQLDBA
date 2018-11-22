@@ -110,6 +110,7 @@ BEGIN
   -- Only check those sql login (excluding sa and system created)
   if exists(SELECT name FROM sys.server_principals WHERE sid=@sid and TYPE = 'S' and name<>'sa' and name not like '%##%')
   begin
+    -- HostIpAddress is not in the whitelist
     IF ([master].[dbo].[fnIsIPinWhiteList](@HostIpAddress)) = 0
     begin
 
