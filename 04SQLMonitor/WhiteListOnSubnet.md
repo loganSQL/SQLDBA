@@ -1,21 +1,75 @@
 # White List on Subnet
 ## White List Schema
 ```
-USE [DBA]
+USE [master]
 GO
 
-DROP TABLE [dbo].[wl_subnet]
-go
+IF OBJECT_ID('dbo.[wl_subnet]') IS NOT NULL
+  DROP TABLE [dbo].[wl_subnet];
+GO
 
 CREATE TABLE [dbo].[wl_subnet](
-  [wl_id] [int] IDENTITY(1,1) NOT NULL primary key,
-  [wl_network] [nvarchar](18) NOT NULL,
-  [wl_rdt] [datetime] NOT NULL
+[wl_id] [int] IDENTITY(1,1) NOT NULL primary key,
+[wl_network] [nvarchar](18) NOT NULL,
+[wl_rdt] [datetime] NOT NULL
 ) ON [PRIMARY]
 GO
 
 ALTER TABLE [dbo].[wl_subnet] ADD  CONSTRAINT [DF_wl_subnet_wl_rdt]  DEFAULT (getdate()) FOR [wl_rdt]
 GO
+
+GRANT SELECT ON dbo.[wl_subnet] TO PUBLIC;
+go
+
+USE model
+go
+
+IF OBJECT_ID('wl_violation') IS NOT NULL
+  DROP TABLE [dbo].[wl_violation];
+GO
+
+CREATE TABLE [dbo].[wl_violation](
+[wl_v_id] [int] IDENTITY(1,1) NOT NULL primary key,
+[wl_v_rdt] [datetime] NOT NULL,
+[LoginName] VARCHAR(255) NOT NULL,
+    [HostName] VARCHAR(255) NULL,
+    [HostIpAddress] VARCHAR(50) NULL,
+[AppName] VARCHAR(128) NULL,
+[Pass] BIT NULL,
+
+
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[wl_violation] ADD  CONSTRAINT [DF_wl_v_rdt]  DEFAULT (getdate()) FOR [wl_v_rdt]
+GO
+grant insert on [dbo].[wl_violation] to public
+go
+
+USE tempdb
+go
+
+IF OBJECT_ID('wl_violation') IS NOT NULL
+  DROP TABLE [dbo].[wl_violation];
+GO
+
+CREATE TABLE [dbo].[wl_violation](
+[wl_v_id] [int] IDENTITY(1,1) NOT NULL primary key,
+[wl_v_rdt] [datetime] NOT NULL,
+[LoginName] VARCHAR(255) NOT NULL,
+    [HostName] VARCHAR(255) NULL,
+    [HostIpAddress] VARCHAR(50) NULL,
+[AppName] VARCHAR(128) NULL,
+[Pass] BIT NULL,
+
+
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[wl_violation] ADD  CONSTRAINT [DF_wl_v_rdt]  DEFAULT (getdate()) FOR [wl_v_rdt]
+GO
+
+grant insert on [dbo].[wl_violation] to public
 ```
 
 ```
@@ -37,6 +91,63 @@ insert into [dbo].[wl_subnet]([wl_network]) values ('10.16.104.0/24')
 insert into [dbo].[wl_subnet]([wl_network]) values ('10.16.105.0/24')
 
 ```
+## Logon Trigger
+```
+CREATE TRIGGER WLSTrigger
+ON ALL SERVER FOR LOGON
+AS
+BEGIN
+  DECLARE 
+     @LoginName VARCHAR(255) = ORIGINAL_LOGIN()
+    ,@HostName VARCHAR(255) = HOST_NAME()
+    ,@HostIpAddress VARCHAR(50) = CONVERT(VARCHAR(50),CONNECTIONPROPERTY('client_net_address'))
+    ,@AppName nvarchar(128)
+    ,@sid varbinary(85)=SUSER_SID()
+    ,@Msg VARCHAR(255);
+    
+  --set @HostIpAddress='172.16.121.40'
+
+  -- Only check those sql login (excluding sa and system created)
+  if exists(SELECT name FROM sys.server_principals WHERE sid=@sid and TYPE = 'S' and name<>'sa' and name not like '%##%')
+  begin
+    IF ([master].[dbo].[fnIsIPinWhiteList](@HostIpAddress)) = 0
+    begin
+
+    /*
+      -- just keep an violation record into tempdb
+      insert into tempdb.[dbo].[wl_violation]([LoginName],[HostName],[HostIpAddress],[AppName],[Pass])
+      values (
+        @LoginName
+        ,@HostName
+        ,@HostIpAddress
+        ,@AppName,
+        0
+      )
+   */
+      -- directly kick out the connection
+      rollback
+    end
+  end
+END;
+GO
+```
+
+## Some commands for Logon Trigger
+```
+use master
+go
+
+select * from sys.server_triggers
+go
+
+
+disable trigger WLSTrigger on ALL SERVER
+go
+
+drop trigger WLSTrigger on ALL SERVER
+go
+```
+
 [Reference: Datatype for storing ip address in SQL Server](https://stackoverflow.com/questions/1385552/datatype-for-storing-ip-address-in-sql-server)
 
 ## T-SQL functions
