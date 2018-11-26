@@ -88,12 +88,12 @@ if (@user is not null)
   begin
   if not exists (select UserName from @DB_USers where UserName=@user)
     begin
-    print @user
+--    print @user
     return
     end
   else
     begin
-    print 'deleting...'
+--    print 'deleting...'
     delete from @DB_USers where UserName<>@user
     end
   end
