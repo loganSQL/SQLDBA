@@ -77,9 +77,9 @@ $date+' Scripts have been checked in to the following directory'>$CheckInLogText
 dir $destination >> $CheckInLogText
 "" >> $CheckInLogText
 "The following are the schedule:" >> $CheckInLogText
-"1. Customer_Trigger will run at 3PM" >> $CheckInLogText
-"2. Customer_Patch will run at 8:30PM" >> $CheckInLogText
-"3. Customer_Restore will run at 10:30PM" >> $CheckInLogText
+"1. Customer_Trigger will run at 5PM" >> $CheckInLogText
+"2. Customer_Patch will run at 8PM" >> $CheckInLogText
+"3. Customer_Restore will run at 10PM" >> $CheckInLogText
 "" >> $CheckInLogText
 "You will be notified by email">> $CheckInLogText
 
