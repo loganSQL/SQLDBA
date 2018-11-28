@@ -151,3 +151,23 @@ $maillist = 'devteam@mycompany.com;sqldba@mycompany.com'
 $sendmailsql="exec msdb..sendOutputEmail '{0}','{1}','{2}'" -f $scriptprefix,$OutputText,$maillist
 sqlcmd -E -S $servername -d $dbname -Q $sendmailsql
 ```
+
+## sp_send_dbmail
+
+The store procedure to send an email with a output file
+```
+USE [msdb]
+GO
+
+CREATE procedure [dbo].[sendOutputEmail] 
+(@job_name varchar(255), @outfile varchar(1024), @emails varchar(1024))
+as
+select @job_name= @job_name+' Daily Run At '+  CONVERT(VARCHAR(24), GETDATE(), 113)
+EXEC msdb.dbo.sp_send_dbmail
+@profile_name = 'sqladmin',
+@recipients = @emails,
+@body = 'The result has been attached.',
+@file_attachments = @outfile,
+@subject =   @job_name ;
+GO
+```
