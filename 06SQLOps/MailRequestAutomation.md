@@ -151,7 +151,7 @@ $sendmailsql="exec msdb..sendOutputEmail '{0}','{1}','{2}'" -f $scriptprefix,$Ou
 sqlcmd -E -S $servername -d $dbname -Q $sendmailsql
 ```
 
-## sp_send_dbmail
+## sendOutputEmail
 
 The store procedure to send an email with a output file
 ```
