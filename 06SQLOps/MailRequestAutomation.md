@@ -163,7 +163,7 @@ CREATE procedure [dbo].[sendOutputEmail]
 as
 select @job_name= @job_name+' Daily Run At '+  CONVERT(VARCHAR(24), GETDATE(), 113)
 EXEC msdb.dbo.sp_send_dbmail
-@profile_name = 'sqladmin',
+@profile_name = 'sqldba',
 @recipients = @emails,
 @body = 'The result has been attached.',
 @file_attachments = @outfile,
