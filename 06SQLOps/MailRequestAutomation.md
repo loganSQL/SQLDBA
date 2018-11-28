@@ -16,9 +16,8 @@ The submission email is configured to:
 * save all the scripts to local directory (C:\request)
 * move submission email to a folder on exchange (for audit purpose)
 
-[How To Automatically Download/Save Attachments From Outlook To A Certain Folder?](<https://www.extendoffice.com/documents/outlook/3747-outlook-auto-download-save-attachments-to-folder.html>)
 
-### Automatically Download Outlook Attachments To Folder With VBA And Rule
+### [Automatically Download Outlook Attachments To Folder With VBA And Rule](<https://www.extendoffice.com/documents/outlook/3747-outlook-auto-download-save-attachments-to-folder.html>)
 1. Press Alt + F11 keys to open the Microsoft Visual Basic for Applications window.
 
 2. Click Insert > Module, and then paste below VBA script into the new opening Module window
