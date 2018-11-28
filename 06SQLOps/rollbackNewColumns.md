@@ -45,7 +45,7 @@ FROM
 
 WHERE 
         schemas.name = 'dbo'
-    AND tables.name = 'COMMITME'
+    AND tables.name = 'mytable'
 --    AND all_columns.name = 'columnname'
 -- AND parent_column_id >232
 
