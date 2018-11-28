@@ -1,4 +1,4 @@
-﻿/*
+/*
 	An encrypted stored procedure for recreating a linkserver with hardcore password, assigned as a startup proc
 */
 
@@ -16,7 +16,7 @@ IF  EXISTS (SELECT srv.name FROM sys.servers srv WHERE srv.server_id != 0 AND sr
 	EXEC master.dbo.sp_dropserver @server=N'MYPROD', @droplogins='droplogins'
 
 /****** Object:  LinkedServer [MYPROD]    Script Date: 09/15/2017 09:28:47 ******/
-EXEC master.dbo.sp_addlinkedserver @server = N'MYPROD', @srvproduct=N'DB2 for i', @provider=N'IBMDASQL', @datasrc=N'MYPROD', @provstr=N'DEFAULT COLLECTION=MY_PROD', @catalog=N'S1098c7e'
+EXEC master.dbo.sp_addlinkedserver @server = N'MYPROD', @srvproduct=N'MYDBPRODUCT', @provider=N'MYDBPROVIDER', @datasrc=N'MYPROD', @provstr=N'DEFAULT COLLECTION=MY_PROD', @catalog=N'S1098c7e'
  /* For security reasons the linked server remote logins password is changed with ######## */
 EXEC master.dbo.sp_addlinkedsrvlogin @rmtsrvname=N'MYPROD',@useself=N'False',@locallogin=N'MYDOMAIN\USER1',@rmtuser=N'REMOTEUSER',@rmtpassword='PWD'
 EXEC master.dbo.sp_addlinkedsrvlogin @rmtsrvname=N'MYPROD',@useself=N'False',@locallogin=N'MYDOMAIN\USER2',@rmtuser=N'REMOTEUSER',@rmtpassword='PWD'
