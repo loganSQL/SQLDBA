@@ -44,7 +44,7 @@ End Sub
 
 ## Check In / Schedule
 
-Create a Task in Task Schedule on the client machine with submission email, and to copy the submitted scripts from local directory (C:\Request) to server directory (\\myserver\e$\Request\Daily)
+Create a Task in Task Schedule on the client machine with submission email, and to copy the submitted scripts from local directory (C:\Request) to server directory (\\\myserver\e$\Request\Daily)
 ```
 $servername = 'myserver'
 $dbname = 'tempdb'
