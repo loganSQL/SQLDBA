@@ -107,7 +107,7 @@ Param (
 
 if (!$servername -or !$dbname -or !$requestpath -or !$scriptprefix )
 {
-'.\scriptrunner.ps1 -servername SERVERNAME -dbname DBNAME -requestpath REQUESTPATH -scriptprefix scriptprefix'  
+'.\scriptrunner.ps1 -servername SERVERNAME -dbname DBNAME -requestpath REQUESTPATH -scriptprefix SCRIPTPREFIX'  
  exit
 }
 
