@@ -1,11 +1,18 @@
 # Mail Request Automation
 ## Overview
 ***
-I receive an email daily with some attached scripts to be executed routinely at different times.
+I received an email daily with some attached scripts to be executed routinely at different times.
 The manual process is :
 * save the attachment
 * execute the script at the specific time
 * email the result back to requester
+***
+I automated the manual process in the following steps:
+1. Submission to an dedicated email account;
+2. Check In and Schedule the downloaded scripts;
+3. Execute Script one by one based on fixed schedule;
+
+At the end of each step, an acknowledge email would be sent with the result.
 ***
 
 ## Submission
@@ -18,7 +25,7 @@ The submission email is configured to:
 
 
 ### [Automatically Download Outlook Attachments To Folder With VBA And Rule](<https://www.extendoffice.com/documents/outlook/3747-outlook-auto-download-save-attachments-to-folder.html>)
-To automatically download attachments, configure Microsoft outlook client as the following:
+To automatically download attachments, I configured Microsoft outlook client as the following:
 1. Press Alt + F11 keys to open the Microsoft Visual Basic for Applications window.
 
 2. Click Insert > Module, and then paste below VBA script into the new opening Module window
@@ -45,7 +52,7 @@ End Sub
 
 ## Check In / Schedule
 
-Create a Task in Task Schedule on the client machine with submission email, and to copy the submitted scripts from local directory (C:\Request) to server directory (\\\myserver\e$\Request\Daily)
+I created a Task in Task Schedule on the client machine with submission email by using the following powershell script, to copy the submitted sql scripts from local directory (C:\Request) to server directory (e.g. \\\myserver\e$\Request\Daily)
 ```
 $servername = 'myserver'
 $dbname = 'tempdb'
@@ -93,6 +100,7 @@ sqlcmd -E -S $servername -d $dbname -Q $sendmailsql
 ```
 
 ## Script Runner
+The following powershell script was called at different SQL Agent Job schedule by identified script name prefix:
 ```
 [CmdletBinding()]
 
