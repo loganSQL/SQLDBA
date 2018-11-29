@@ -18,6 +18,7 @@ The submission email is configured to:
 
 
 ### [Automatically Download Outlook Attachments To Folder With VBA And Rule](<https://www.extendoffice.com/documents/outlook/3747-outlook-auto-download-save-attachments-to-folder.html>)
+To automatically download attachments, configure Microsoft outlook client as the following:
 1. Press Alt + F11 keys to open the Microsoft Visual Basic for Applications window.
 
 2. Click Insert > Module, and then paste below VBA script into the new opening Module window
