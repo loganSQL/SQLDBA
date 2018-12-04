@@ -45,7 +45,7 @@ IF(SUSER_ID('TestDomain\test.user1') IS NULL)BEGIN CREATE LOGIN [TestDomain\test
 IF(SUSER_ID('TestDomain\test.user2') IS NULL)BEGIN CREATE LOGIN [TestDomain\test.user2] FROM WINDOWS;/*WINDOWS_LOGIN*/ END;
 IF(SUSER_ID('TestDomain\test.user3') IS NULL)BEGIN CREATE LOGIN [TestDomain\test.user3] FROM WINDOWS;/*WINDOWS_GROUP*/ END;
 ```
-## Synchronize in databases
+## Synchronize Users in databases
 ```
 EXEC sp_MSForEachDB ' Use ?; select ''?'' as dbname, ''use ?; alter user [''+ name+''] with login=[''+name+'']'' as command from ?.sys.database_principals where ''?'' not in (''master'',''model'',''msdb'',''tempdb'') and type in (''U'',''G'',''S'') and name not in (''dbo'', ''guest'', ''INFORMATION_SCHEMA'',''sys'') order by type, name'
 ```
