@@ -32,7 +32,7 @@ SELECT 'IF(SUSER_ID('+QUOTENAME(SP.name,'''')+') IS NULL)BEGIN CREATE LOGIN '+QU
    AND SP.name NOT IN ('');
 ```
 
-## Create on a new server
+## Create logins on a new server
 ```
 -- SQL Logins
 IF(SUSER_ID('testuser1') IS NULL) BEGIN CREATE LOGIN [testuser1] WITH PASSWORD = 0x0100A992C62C075EDCBD8EDD56ECB724819361E13F31C6CC6DA2 HASHED;/*SQL_LOGIN*/ END;
