@@ -10,6 +10,10 @@
 4) [Audit Feature](<http://blogs.msdn.com/b/manisblog/archive/2008/07/21/sql-server-2008-auditing.aspx>): only the Auditing feature provides information about Who / When / How
 ## Default Trace
 [Default Trace in SQL Server 2005](<https://blogs.technet.microsoft.com/vipulshah/2007/04/16/default-trace-in-sql-server-2005/>)
+
+[A Few Cool Things You Can Identify Using the Default Trace](<https://www.databasejournal.com/features/mssql/a-few-cool-things-you-can-identify-using-the-default-trace.html>)
+
+[Default Trace and System Health](<https://blogs.msdn.microsoft.com/askjay/2012/06/28/default-trace-and-system-health/>)
 ```
 -- check the default trace to see if it is enabled.
 SELECT * FROM sys.configurations WHERE configuration_id = 1568
@@ -24,6 +28,13 @@ GO
 RECONFIGURE;
 GO
 
+-- Displaying information about the default trace file
+SELECT   * FROM sys.traces 
+WHERE id = 1;
+
+SELECT   value FROM sys.fn_trace_getinfo(1)
+  WHERE property = 2;
+  
 --get the current trace rollover file name
 SELECT * FROM ::fn_trace_getinfo(0)
 
@@ -61,6 +72,75 @@ WHERE
       e.category_id = 5 AND --category 5 is objects
       e.trace_event_id = 46 
       --trace_event_id: 46=Create Obj,47=Drop Obj,164=Alter Obj
+      
+-- view information in the current default trace file.
+DECLARE   @filename nvarchar(1000);
+ 
+-- 1. Get the name of the current default trace
+SELECT   @filename = cast(value as nvarchar(1000))
+FROM   ::fn_trace_getinfo(default)
+WHERE   traceid = 1 and   property = 2;
+ 
+-- view current trace file
+SELECT   *
+FROM   ::fn_trace_gettable(@filename, default) AS ftg 
+INNER   JOIN sys.trace_events AS te ON ftg.EventClass = te.trace_event_id  
+  ORDER BY   ftg.StartTime
+  
+-- 2. Get object created and deleted events from the current default trace file.
+DECLARE   @filename nvarchar(1000);
+ 
+-- Get the name of the current default trace
+SELECT   @filename = cast(value as nvarchar(1000))
+FROM   ::fn_trace_getinfo(default)
+WHERE   traceid = 1 and   property = 2;
+ 
+-- view current trace file
+SELECT   *
+FROM   ::fn_trace_gettable(@filename, default) AS ftg 
+INNER   JOIN sys.trace_events AS te ON ftg.EventClass = te.trace_event_id  
+WHERE (ftg.EventClass = 46 or ftg.EventClass = 47)
+and   DatabaseName <> 'tempdb' 
+and   EventSubClass = 0
+ORDER   BY ftg.StartTime;
+
+-- 3. find out every time a database has an Auto-Grow event
+DECLARE   @filename nvarchar(1000);
+ 
+-- Get the name of the current default trace
+SELECT   @filename = cast(value as nvarchar(1000))
+FROM   ::fn_trace_getinfo(default)
+WHERE   traceid = 1 and   property = 2;
+ 
+-- Find auto growth events in the current trace file
+SELECT
+    ftg.StartTime
+ ,te.name as EventName
+ ,DB_NAME(ftg.databaseid) AS DatabaseName  
+ ,ftg.Filename
+ ,(ftg.IntegerData*8)/1024.0 AS GrowthMB 
+ ,(ftg.duration/1000)as DurMS
+FROM   ::fn_trace_gettable(@filename, default) AS ftg 
+INNER   JOIN sys.trace_events AS te ON ftg.EventClass = te.trace_event_id  
+WHERE (ftg.EventClass = 92  -- Date File Auto-grow
+      OR ftg.EventClass   = 93) -- Log File Auto-grow
+ORDER BY   ftg.StartTime
+
+-- 4. security related events
+DECLARE   @filename nvarchar(1000);
+ 
+-- Get the name of the current default trace
+SELECT   @filename = cast(value as nvarchar(1000))
+FROM   ::fn_trace_getinfo(default)
+WHERE   traceid = 1 and   property = 2;
+ 
+-- process all trace files
+SELECT   *  
+FROM   ::fn_trace_gettable(@filename, default) AS ftg 
+INNER   JOIN sys.trace_events AS te ON ftg.EventClass = te.trace_event_id  
+WHERE   ftg.EventClass 
+      in (102,103,104,105,106,108,109,110,111)
+  ORDER BY   ftg.StartTime
 ```
 ### Event and Category Queries
 ```
@@ -86,7 +166,31 @@ FROM ::fn_trace_geteventinfo(1) t
      INNER JOIN sys.trace_columns c 
           ON t.columnid = c.trace_column_id
 ```
+### THE TRACE LOG is limited to 20MB
 
+the log file storing the trace is limited to 20MB. Once the file is filled, SQL Server starts another file. Up to 5 files are used (5x20MB=100MB). 
+
+Here's the code to load info from all 5 of them (and hence see default trace records much farther back in time): 
+```
+-- read all trace logs from a table
+DECLARE @FileName VARCHAR(MAX) 
+SELECT @FileName = SUBSTRING(path, 0, LEN(path)-CHARINDEX('\', REVERSE(path))+1) + '\Log.trc' 
+FROM sys.traces 
+WHERE is_default = 1; 
+
+--select @filename 
+SELECT * into trace_table FROM sys.fn_trace_gettable( @FileName, DEFAULT ) AS gt 
+
+select * from trace_table
+```
+If you wish to get the actual data out of the default trace files – there are 5 by default, then you can do the following to see what configuration and schema changes have been made on your system in the last 5 restarts of your SQL Service or in the last 100 MB of trace data – whichever comes first (the default trace automatically starts a new file at 20MB and maintains 5 files):
+```
+declare @def_trace nvarchar(250) = (select path from sys.traces where is_default = 1) 
+select e.name, x.* from          
+    fn_trace_gettable(@def_trace, 5) x 
+    join sys.trace_events e 
+    on x.EventClass = e.trace_event_id
+```
 ## Detect DDL changes by using trace file
 [list of events](<https://docs.microsoft.com/en-us/sql/relational-databases/system-stored-procedures/sp-trace-setevent-transact-sql?view=sql-server-2017>)
 
