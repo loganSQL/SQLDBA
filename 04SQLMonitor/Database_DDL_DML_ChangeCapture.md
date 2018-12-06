@@ -282,3 +282,102 @@ FROM fn_trace_geteventinfo(1) tg
 INNER JOIN sys.trace_events te ON tg.[eventid] = te.[trace_event_id]  
 INNER JOIN sys.trace_columns tc ON tg.[columnid] = tc.[trace_column_id]
 ```
+## [Hidden Gems of DEFAULT TRACE in SQL Server](<https://www.codeproject.com/Articles/1085631/Hidden-Gems-of-DEFAULT-TRACE-in-SQL-Server>)
+
+```
+-- The default trace directory:
+
+SELECT [path], start_time, last_event_time, event_count
+FROM sys.traces
+WHERE is_default = 1
+
+-- what kind of events can be stored in the default trace
+SELECT e.trace_event_id, e.name, c.category_id, c.name
+FROM sys.trace_categories c
+JOIN sys.trace_events e ON c.category_id = e.category_id
+```
+```
+-- track the object changes
+SELECT
+      EventType = e.name
+    , t.DatabaseName
+    , t.ApplicationName
+    , t.LoginName
+    , t.StartTime
+    , t.ObjectName
+    , ObjectType =
+        CASE t.ObjectType
+            WHEN 8259 THEN 'Check Constraint'
+            WHEN 8260 THEN 'Default Constraint'
+            WHEN 8262 THEN 'Foreign Key'
+            WHEN 8272 THEN 'Stored Procedure'
+            WHEN 8274 THEN 'Rule'
+            WHEN 8275 THEN 'System Table'
+            WHEN 8276 THEN 'Server Trigger'
+            WHEN 8277 THEN 'Table'
+            WHEN 8278 THEN 'View'
+            WHEN 8280 THEN 'Extended Stored Procedure'
+            WHEN 16724 THEN 'CLR Trigger'
+            WHEN 16964 THEN 'Database'
+            WHEN 17222 THEN 'FullText Catalog'
+            WHEN 17232 THEN 'CLR Stored Procedure'
+            WHEN 17235 THEN 'Schema'
+            WHEN 17985 THEN 'CLR Aggregate Function'
+            WHEN 17993 THEN 'Inline Table-valued SQL Function'
+            WHEN 18000 THEN 'Partition Function'
+            WHEN 18004 THEN 'Table-valued SQL Function'
+            WHEN 19280 THEN 'Primary Key'
+            WHEN 19539 THEN 'SQL Login'
+            WHEN 19543 THEN 'Windows Login'
+            WHEN 20038 THEN 'Scalar SQL Function'
+            WHEN 20051 THEN 'Synonym'
+            WHEN 20821 THEN 'Unique Constraint'
+            WHEN 21075 THEN 'Server'
+            WHEN 21076 THEN 'Transact-SQL Trigger'
+            WHEN 21313 THEN 'Assembly'
+            WHEN 21318 THEN 'CLR Scalar Function'
+            WHEN 21321 THEN 'Inline scalar SQL Function'
+            WHEN 21328 THEN 'Partition Scheme'
+            WHEN 21333 THEN 'User'
+            WHEN 21572 THEN 'Database Trigger'
+            WHEN 21574 THEN 'CLR Table-valued Function'
+            WHEN 21587 THEN 'Statistics'
+            WHEN 21825 THEN 'User'
+            WHEN 21827 THEN 'User'
+            WHEN 21831 THEN 'User'
+            WHEN 21843 THEN 'User'
+            WHEN 21847 THEN 'User'
+            WHEN 22601 THEN 'Index'
+            WHEN 22611 THEN 'XMLSchema'
+            WHEN 22868 THEN 'Type'
+        END
+FROM sys.traces i
+CROSS APPLY sys.fn_trace_gettable([path], DEFAULT) t
+JOIN sys.trace_events e ON t.EventClass = e.trace_event_id
+WHERE e.name IN ('Object:Created', 'Object:Deleted', 'Object:Altered')
+    AND t.ObjectType != 21587
+    AND t.DatabaseID != 2
+    AND i.is_default = 1
+    AND t.EventSubClass = 1
+```
+```
+-- server event
+SELECT
+    CASE WHEN t.EventSubClass = 1
+        THEN 'BACKUP' 
+        ELSE 'RESTORE'
+    END, t.TextData, t.ApplicationName, t.LoginName, t.StartTime
+FROM sys.traces i
+CROSS APPLY sys.fn_trace_gettable([path], DEFAULT) t
+WHERE i.is_default = 1
+    AND t.EventClass = 115 -- Audit Backup/Restore Event
+    
+SELECT
+      t.StartTime
+    , [Type] = CASE WHEN EventSubClass = 1 THEN 'UP' ELSE 'DOWN' END
+    , t.IntegerData
+FROM sys.traces i
+CROSS APPLY sys.fn_trace_gettable([path], DEFAULT) t
+WHERE t.EventClass = 81 -- Server Memory Change
+    AND i.is_default = 1
+```
