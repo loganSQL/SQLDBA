@@ -262,6 +262,7 @@ SET @tracefile = (SELECT LEFT([path],LEN([path])-CHARINDEX('\',REVERSE([path])))
 ,gt.[EventClass] [EventID]  
 ,e.[Name] [EventName]  
 ,gt.[LoginName]  
+,gt.[HostName] 
 ,gt.[ApplicationName]  
 ,gt.[TextData]  
 FROM fn_trace_gettable(@tracefile, DEFAULT) gt  
