@@ -55,5 +55,5 @@ copy $SQLLog\*.trc .\
 ## 7. Housekeep  .\trc_archive for 365 days
 ## housekeep after 365 days
 ## FORFILES /p $BackupDir /s /m log_*.trc /d -365 /c "CMD /C echo @FILE to be deleted"
-FORFILES /p $BackupDir /s /m log_*.trc /d -365 /c "CMD /C del /Q /F @FILE" 2>null 
+FORFILES /p $BackupDir /s /m log_*.trc /d -365 /c "CMD /C del /Q /F @FILE" 2>$BackupDir/trc_archive_housekeep_log.txt 
 ```
