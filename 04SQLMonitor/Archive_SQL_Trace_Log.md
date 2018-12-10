@@ -2,7 +2,7 @@
 
 By default, SQL default trace is limited 20MB per log file. Once the file is filled, SQL Server starts another file. Up to 5 files are used (5x20MB=100MB).
 
-It is very critical to move the sql trace log files to another folder before they are deleted. The following powershell script will do the tick.
+It is very critical to move the sql trace log files to another folder before they are deleted. The following powershell script will do the trick.
 
 ```
 [CmdletBinding()]   
