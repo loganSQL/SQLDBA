@@ -1,6 +1,6 @@
 # SQL Statement Audit
 ## Create a Server Audit
-In SSMS, Instance->Security->Audits->RightClick->New Audit
+In SSMS, Instance->Security->Audits->Right Click->New Audit
 
 ```
 USE [master]
@@ -51,7 +51,7 @@ GO
 ```
 
 ## Enable a Database Audit Specification
-In SSMS, Database Audit Specification->RightClick->Enable
+In SSMS, Database Audit Specification->Right Click->Enable
 ```
 USE [MyDB]
 GO
@@ -66,7 +66,7 @@ GO
 ```
 [ALTER DATABASE AUDIT SPECIFICATION (Transact-SQL)](<https://docs.microsoft.com/en-us/sql/t-sql/statements/alter-database-audit-specification-transact-sql?view=sql-server-2017>)
 ## Enable a Server Audit
-In SSMS, Server Audit->RightClick->Enable
+In SSMS, Server Audit->Right Click->Enable
 ```
 USE [master]
 GO
@@ -77,7 +77,7 @@ GO
 ```
 [ALTER SERVER AUDIT (Transact-SQL)](<https://docs.microsoft.com/en-us/sql/t-sql/statements/alter-server-audit-transact-sql?view=sql-server-2017>)
 ## Review Audit Logs
-In SSMS, Instance->Security-Audit->RightClcik->View Audit Logs
+In SSMS, Instance->Security-Audit->Right Click->View Audit Logs
 ```
 SELECT event_time
   ,action_id
