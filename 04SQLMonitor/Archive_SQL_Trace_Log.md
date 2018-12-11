@@ -1,4 +1,4 @@
-# Archive SQL Trc Logs
+# Archive SQL Default Trace Logs
 
 By default, SQL default trace is limited 20MB per log file. Once the file is filled, SQL Server starts another file. Up to 5 files are used (5x20MB=100MB).
 
