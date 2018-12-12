@@ -101,12 +101,11 @@ AddLine2_Changed = CHANGE_TRACKING_IS_COLUMN_IN_MASK
 AddressID
 FROM CHANGETABLE(CHANGES Person.Address, 1) AS ChTbl;
 ```
-
+[How to read SQL Server Change Tracking results](<https://solutioncenter.apexsql.com/reading-sql-server-change-tracking-results/>)
 ## Some takeaway
 The Change Tracking feature is not designed to return all information about the changes you might need, **it’s designed to be a light auditing solution that indicates whether the row has been changed or not. It shows the ID of the row changed, even the specific column that is changed.** What this feature doesn’t provide are the details about the change. You can match the change information to the database snapshot and the live database to find out more about the changes, but this requires additional coding and still doesn’t bring all the information that might be needed for auditing
 
 **Change tracking doesn’t answer the “who”, “when”, and “how” questions.** Also, if there were multiple changes on a specific row, only the last one is shown. There is no user-friendly GUI that displays the results in just a couple of clicks. To see the change tracking records, you have to write code and use change tracking functions
 
-The execution of the SELECT statements and database object access is not tracked. These events have nothing to do with data changes, but as SQL DBAs request these features when it comes to auditing, it should be mentioned
+**The execution of the SELECT statements and database object access is not tracked.** These events have nothing to do with data changes, but as SQL DBAs request these features when it comes to auditing, it should be mentioned
 
-[How to read SQL Server Change Tracking results](<https://solutioncenter.apexsql.com/reading-sql-server-change-tracking-results/>)
