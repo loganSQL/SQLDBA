@@ -1,5 +1,5 @@
 # SQL Server Change Data Capture
-## Overview
+## 1. Overview
 SQL Server Change Data Capture was introduced in SQL Server 2008 to make the extract, transform, and load processes easier. It also captures information about data changes – inserts, deletes and updates, but it provides more details than SQL Server Change Tracking. The mechanism used for capturing and the information captured are different
 
 In Change Data Capture, the information is retrieved by periodic querying of the online transaction log. The process is asynchronous. Database performance is not affected; performance overhead is lower than with other solutions (e.g. using triggers)
@@ -16,7 +16,7 @@ Like with Change Tracking, there is a built-in clean-up solution that removes ol
 
 Both Change Tracking and Change Data Capture can be enabled on the same database at the same time
 
-##
+## 2. Setup Change Data Capture (CDC)
 The feature is available only in SQL Server Enterprise and Developer editions, starting with. It can be enabled only using system stored procedures. SQL Server Management Studio provides a wide range of code templates for various feature related actions.
 
 SSMS -> View -> Template Explorer -> SQL Server Template -> Change Data Capture -> Enable Database for CDC
@@ -73,6 +73,7 @@ Job 'cdc.DBA_cleanup' started successfully.
 ```
 
 ```
+-- List of Jobs with '%cdc%'
 SELECT 
     [sJOB].[job_id] AS [JobID]
     , [sJOB].[name] AS [JobName]
@@ -118,7 +119,7 @@ FROM
 WHERE [sJob].[name] like '%cdc%' 
 ORDER BY [JobName]
 
---- Output
+--- Output of query (Funny, the JobCategory is REPL)
 JobName  JobOwner  JobCategory  JobDescription
 cdc.DBA_capture  dbo  REPL-LogReader  CDC Log Scan Job
 cdc.DBA_cleanup  dbo  REPL-Checkup  CDC Cleanup Job
@@ -160,3 +161,94 @@ For each tracked table, a new system table and up to two functions are created, 
 **Although it captures more information about transactions than SQL Server Change Tracking, it doesn’t answer the “who”, “when”, and “how” questions**
 
 [How to enable and use SQL Server Change Data Capture](<https://solutioncenter.apexsql.com/enable-use-sql-server-change-data-capture/>)
+
+## 3. Analyze Change Data Capture Records
+[How to analyze and read Change Data Capture (CDC) records](<https://solutioncenter.apexsql.com/analyzing-and-reading-change-data-capture-cdc-records/>)
+
+### Tables for Tracked Database
+The following tables are automatically created in the tracked database when Change Data Capture is enabled:
+
+**cdc.captured_columns** – contains a row for each column tracked in the tracked (source) tables
+
+**cdc.change_tables** – contains a row for each change table in the tracked database
+
+**cdc.ddl_history** – contains a row for each structure (Data Definition Language) change of source tables
+
+**cdc.index_columns** – contains a row for each index column associated with a change table. The index columns are used to uniquely identify rows in the source tables
+
+**cdc.lsn_time_mapping** – contains a row for each transaction in the source tables. It maps Log Sequence Number values to the time the transaction was committed
+
+**msdb.dbo.cdc_jobs** - stores configuration parameters for capture and cleanup jobs is the only system table created in the msdb database
+
+### Tables for Tracked Table
+When the feature is enabled on a table, the change table named **cdc.<captured_instance>_CT** is automatically created in the tracked database. 
+
+The table contains a row for each insert and delete on the source table, and two rows for each update. The first one is identical to the row before the update, and the second one to the row after the update. To query the table, use the **cdc.fn_cdc_get_all_changes** and **cdc.fn_cdc_get_net_changes** functions
+
+The first five columns contain the metadata necessary for the feature, the rest are the exact replica of the source table:
+
+**__$start_lsn** – the Log Sequence Number of the commited transaction. Every change committed in the same transaction has its own row in the change table, but the same __$start_lsn
+
+**__$end_lsn**  – the column is always NULL in SQL Server 2012, future compatibility is not guarantee
+
+**__$seqval** – the sequence value used to order the row changes within a transaction
+
+**__$operation** – indicates the change type made on the row (*Delete,Insert,Updated row before the change, Updated row after the change*)
+
+**__$update_mask** – similar to the update mask available in Change Tracking, a bit mask used to identify the ordinals of the modified columns
+
+### The system table valued functions
+**cdc.fn_cdc_get_all_changes_<capture_instance>** – returns a row for each change in the source table that belongs to the Log Sequence Number in the range specified by the input parameters
+
+### Samples
+```
+use DBA
+go
+
+select top 10 * from [dbo].[addresses]
+go
+
+-- make changes
+insert [dbo].[addresses] ([street], [city], [region], [country], [code], [phone]) 
+values ('2300 University Ave', 'Toronto', 'ON', 'CA', 'M8J-8D5','(417) 980-4545')
+go
+
+select max(id) from [dbo].[addresses]
+go
+
+update [dbo].[addresses]
+set street = '10 King St West' 
+where id = 51
+go
+
+update [dbo].[addresses]
+set code='N6H-5H1'
+where id = 1
+go
+
+-- Both cdc.fn_cdc_get_all_changes and cdc.fn_cdc_get_net_changes functions require two parameters 
+-– the maximal and minimal Log Sequence Number (LSN) for the queried set of records
+SELECT sys.fn_cdc_get_min_lsn('dbo_addresses') AS min_lsn
+SELECT sys.fn_cdc_get_max_lsn() AS max_lsn
+
+-- sys.fn_cdc_get_column_ordinal – returns the ordinal of the column in a source table.
+SELECT sys.fn_cdc_get_column_ordinal( 'dbo_addresses', 'street') 
+
+-- To read all captured information 
+DECLARE @from_lsn binary (10), @to_lsn binary (10)
+
+SET @from_lsn = sys.fn_cdc_get_min_lsn('dbo_addresses')
+SET @to_lsn = sys.fn_cdc_get_max_lsn()
+
+SELECT *
+FROM cdc.fn_cdc_get_all_changes_dbo_addresses(@from_lsn, @to_lsn, 'all')
+ORDER BY __$seqval
+
+-- street column is 2
+SELECT sys.fn_cdc_is_bit_set(2, __$update_mask) as 
+'Street_Updated'
+FROM cdc.fn_cdc_get_all_changes_dbo_addresses(@from_lsn, @to_lsn, 'all')
+ORDER BY __$seqval
+
+
+```
