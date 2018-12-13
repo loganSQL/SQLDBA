@@ -70,6 +70,6 @@ But wait. For all these troubles, DBA should be able to just drop the symmetric 
 use master
 go
 drop SYMMETRIC KEY DataEncrypt
-drop table NoDBA.dbo.SecretData
+drop table DBA.dbo.SecretData
 ```
 
