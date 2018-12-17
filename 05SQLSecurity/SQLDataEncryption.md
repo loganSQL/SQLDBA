@@ -34,7 +34,7 @@ GO
 The next step is to create a self-signed certificate that is protected by the database master key. A certificate is a digitally signed security object that contains a public (and optionally a private) key for SQL Server. An optional argument when creating a certificate is ENCRYPTION BY PASSWORD. This argument defines a password protection method of the certificate's private key. In our creation of the certificate we have chosen to not include this argument; by doing so we are specifying that the certificate is to be protected by the database master key.
 ```
 -- Create self signed certificate
-USE encrypt_test;
+USE DatabaseABC;
 GO
 CREATE CERTIFICATE CertificateABC
 WITH SUBJECT = 'To protect Company ABC data'';
