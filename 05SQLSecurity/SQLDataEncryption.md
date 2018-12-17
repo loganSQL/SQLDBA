@@ -24,7 +24,7 @@ GO
 The next step is to create a database master key. This is accomplished using the CREATE MASTER KEY method. The "encrypt by password" argument is required and defines the password used to encrypt the key. The DMK does not directly encrypt data, but provides the ability to create keys that are used for data encryption. It is important that you keep the encryption password in a safe place and/or keep backups of your SQL Server Database Master Key.
 ```
 -- Create database Key
-USE encrypt_test;
+USE DatabaseABC;
 GO
 CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'December2012';
 GO
