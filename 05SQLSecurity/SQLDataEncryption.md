@@ -28,6 +28,9 @@ USE DatabaseABC;
 GO
 CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'December2012';
 GO
+
+-- check the key in This DB
+SELECT * FROM sys.symmetric_keys
 ```
 
 ### 1.3. Create a Self Signed SQL Server Certificate
@@ -37,8 +40,11 @@ The next step is to create a self-signed certificate that is protected by the da
 USE DatabaseABC;
 GO
 CREATE CERTIFICATE CertificateABC
-WITH SUBJECT = 'To protect Company ABC data'';
+WITH SUBJECT = 'To protect Company ABC data';
 GO
+
+-- check
+select * from sys.certificates
 ```
 
 ### 1.4. SQL Server Symmetric Key in A Database
@@ -52,6 +58,9 @@ CREATE SYMMETRIC KEY SymmetricKeyABC
  WITH ALGORITHM = AES_128 
  ENCRYPTION BY CERTIFICATE CertificateABC;
 GO
+
+-- check
+SELECT * FROM sys.symmetric_keys
 ```
 ### 1.5. Encrypt the Columns on a Table in a Database
 
@@ -123,10 +132,18 @@ SELECT Customer_id, Credit_card_number_encrypt AS 'Encrypted Credit Card Number'
 CONVERT(varchar, DecryptByKey(Credit_card_number_encrypt)) AS 'Decrypted Credit Card Number'
 FROM dbo.Customer_data;
 
+revert
 -- grant permissions on encrypted data
-GRANT VIEW DEFINITION ON SYMMETRIC KEY::SymmetricKey1 TO test; 
+GRANT VIEW DEFINITION ON SYMMETRIC KEY::SymmetricKeyABC TO test; 
 GO
-GRANT VIEW DEFINITION ON Certificate::Certificate1 TO test;
+GRANT VIEW DEFINITION ON Certificate::CertificateABC TO test;
+GO
+
+-- execute as user='test' again
+
+
+-- close
+CLOSE SYMMETRIC KEY SymmetricKeyABC;
 GO
 ```
 
