@@ -1,4 +1,15 @@
 # Database Mail Records
+
+## Overview
+* Database Mail keeps copies of outgoing e-mail messages and displays them in the **sysmail_allitems**, **sysmail_sentitems**, **sysmail_unsentitems** views of the msdb database. 
+* The Database Mail external program logs activity and displays the log through the Windows Application Event Log and the **sysmail_event_log** view in the msdb database. To check the status of an e-mail message, run a query against this view. E-mail messages have one of four possible statuses: ***sent, unsent, retrying, and failed***.
+
+## T-SQL
+To view the status of the e-mail sent using Database Mail, Select from the **sysmail_allitems** table, specifying the messages of interest by *mailitem_id* or *sent_status*.
+
+To check the status returned from the external program for the e-mail messages, join **sysmail_allitems** to **sysmail_event_log** view on the *mailitem_id* column.
+
+By default, the external program does not log information about messages that were successfully sent. To log all messages, set the logging level to verbose using the *Configure System Parameters* page of the *Database Mail Configuration Wizard*
 ```
 -- 
 USE msdb ;  
@@ -35,3 +46,5 @@ GO
 
 EXECUTE msdb.dbo.sp_notify_operator @name=N'sqlalert',@subject=N'MyDB Full Backup Completion',@body=N'MyDB Full Backup Completes successfully.'
 ```
+
+[Check the Status of E-Mail Messages Sent With Database Mail](<https://docs.microsoft.com/en-us/sql/relational-databases/database-mail/check-the-status-of-e-mail-messages-sent-with-database-mail?view=sql-server-2017>)
