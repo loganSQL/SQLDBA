@@ -49,7 +49,23 @@ End Sub
 10. Now in the last Rules Wizard dialog box, please name the rule in the Step 1 box, check options as you need in the Step 2 section, and click the Finish button.
 11. Close the Rules and Alerts dialog box.
 
-If VBA Micro doesn't execute as expected, then check **Macro Settings** in **Trust Center**: **File -> Options -> Trust Center (Trust Center Settings) -> Macro Settings -> "Enable all macros" (Apply macro security settings to installed add-ins)**
+
+When you create a macro and are running Outlook with the default security settings, you are not able to run the macro at all or you’ll always get prompted first, unless you either tamper with the default security settings or sign your own code with a digital certificate.
+
+Since it is not very common to have your own digital certificate, you probably set your macro security to a lower level to be able to run your macro:
+
+* check **Macro Settings** in **Trust Center**: **File -> Options -> Trust Center (Trust Center Settings) -> Macro Settings -> "Enable all macros" (Apply macro security settings to installed add-ins)**
+
+[Signing your own macros with SelfCert.exe](<https://www.howto-outlook.com/howto/selfcert.htm>)
+* Create a certificate (**SELFCERT.exe**)
+  * C:\Program Files\Microsoft Office\Office14\SELFCERT.EXE
+  * Your certificate's name: LoganTest
+* Sign your code (**VBA Editor**)
+  * Back in the VBA Editor (ALT+F11) where you created the macro choose;
+  * Tools-> Digital Signature…
+      You’ll see that the current VBA project isn’t signed yet. Press the Choose… button and you’ll get a screen to select a certificate. Now you can choose the certificate you just created.
+* Verify your macro security level (**Outlook**)
+  * File-> Options-> Trust Center-> Trust Center Settings…-> Macro Settings-> option: *Notifications for digitally signed macros, all other macros disabled*
 
 ## Check In / Schedule
 
