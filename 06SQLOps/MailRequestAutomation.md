@@ -60,6 +60,7 @@ Since it is not very common to have your own digital certificate, you probably s
 * Create a certificate (**SELFCERT.exe**)
   * C:\Program Files\Microsoft Office\Office14\SELFCERT.EXE
   * Your certificate's name: LoganTest
+  (certificate created under the **MMC console --> Certificate snap in --> LocalComputer --> Personal section**)
 * Sign your code (**VBA Editor**)
   * Back in the VBA Editor (ALT+F11) where you created the macro choose;
   * Tools-> Digital Signature…
