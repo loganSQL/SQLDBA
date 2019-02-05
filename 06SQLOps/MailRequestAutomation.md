@@ -48,7 +48,8 @@ End Sub
 9. In the Rules Wizard (Are there any exceptions?) dialog box, please click the Next button directly.
 10. Now in the last Rules Wizard dialog box, please name the rule in the Step 1 box, check options as you need in the Step 2 section, and click the Finish button.
 11. Close the Rules and Alerts dialog box.
- 
+
+If VBA Micro doesn't execute as expected, then check **Macro Settings** in **Trust Center**: **File -> Options -> Trust Center (Trust Center Settings) -> Macro Settings -> "Enable all macros" (Apply macro security settings to installed add-ins)**
 
 ## Check In / Schedule
 
