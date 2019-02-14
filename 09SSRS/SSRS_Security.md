@@ -13,7 +13,7 @@ The permissions granted to user 'xx\xx' are insufficient for performing this ope
 This is the folder permission:
 ```
 * Login to the server where SSRS is installed
-* Open http://<servername:80>/reports
+* Open http://servername:80/reports
 * Click on Home Folder
 * Click on Folder Settings
 * Add your domain account here by
