@@ -293,3 +293,22 @@ $SqlFoundWowKey | Set-ItemProperty -Name EnableErrorReporting -Value 0
 $SqlFoundWowKey | Set-ItemProperty -Name CustomerFeedback -Value 0
 }
 ```
+
+### Do it One by One
+```
+Get-Service |? name -Like "SQLTELEMETRY*" | select -property name,starttype,status
+Get-Service |? name -Like "SSASTELEMETRY*" | select -property name,starttype,status
+Get-Service |? name -Like "SSISTELEMETRY*" | select -property name,starttype,status
+
+
+##################################################
+# Disable CEIP services  #
+##################################################
+Get-Service |? name -Like "*TELEMETRY*" | select -property name,starttype,status
+# Stop all CEIP services
+Get-Service |? name -Like "*TELEMETRY*" | ? status -eq "running" | Stop-Service
+Get-Service |? name -Like "*TELEMETRY*" | select -property name,starttype,status
+# Disable all CEIP services
+Get-Service |? name -Like "*TELEMETRY*" | Set-Service -StartMode Disabled
+Get-Service |? name -Like "*TELEMETRY*" | select -property name,starttype,status
+```
