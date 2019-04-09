@@ -38,7 +38,7 @@ Status   Name               DisplayName
 Running  PowerBIReportSe... Power BI Report Server
 ```
 
-## Remote Serve services
+## Manage services on Remote Hosts
 ```
 PS C:\Windows\system32> get-service -ComputerName RemoteHost SQL*
 
