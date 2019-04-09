@@ -180,7 +180,7 @@ __NAMESPACE      :
 __PATH           :
 ReturnValue      : 0
 PSComputerName   :
-PS C:\Windows\system32> Invoke-WmiMethod -Path "Win32_Service.Name='PowerBIReportServer'" -Name StartService -ComputerName TORQFNSQL13
+PS C:\Windows\system32> Invoke-WmiMethod -Path "Win32_Service.Name='PowerBIReportServer'" -Name StartService -ComputerName RemoteHost
 
 
 __GENUS          : 2
@@ -198,7 +198,7 @@ PSComputerName   :
 
 
 
-PS C:\Windows\system32> $service = Get-WmiObject -ComputerName TORQFNSQL13 -Class Win32_Service -Filter "Name='PowerBIReportServer'"
+PS C:\Windows\system32> $service = Get-WmiObject -ComputerName RemoteHost -Class Win32_Service -Filter "Name='PowerBIReportServer'"
 PS C:\Windows\system32> $service
 
 
