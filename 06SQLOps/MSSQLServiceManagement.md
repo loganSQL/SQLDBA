@@ -82,6 +82,23 @@ Status   Name               DisplayName
 ------   ----               -----------
 Running  PowerBIReportSe... Power BI Report Server
 Running  ReportServer       SQL Server Reporting Services (MSSQ...
+
+
+PS C:\Windows\system32> $service=get-service -ComputerName RemoteHost -Name PowerBIReportServer
+PS C:\Windows\system32> $service
+
+Status   Name               DisplayName
+------   ----               -----------
+Running  PowerBIReportSe... Power BI Report Server
+
+
+PS C:\Windows\system32> $service.Stop()
+PS C:\Windows\system32> $service.Refresh()
+PS C:\Windows\system32> $service
+
+Status   Name               DisplayName
+------   ----               -----------
+Stopped  PowerBIReportSe... Power BI Report Server
 ```
 
 ## More detail service management via WMI
