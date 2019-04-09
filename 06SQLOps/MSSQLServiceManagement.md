@@ -227,3 +227,69 @@ State     : Running
 Status    : OK
 
 ```
+
+## [Deactivate the Customer Experience Improvement Program (CEIP)](<https://blog.dbi-services.com/sql-server-tips-deactivate-the-customer-experience-improvement-program-ceip/>)
+
+CEIP is present for 3 SQL server services:
+
+For SQL Server Engine, you have a SQL Server CEIP service
+For SQL Server Analysis Service (SSAS), you have a SQL Analysis Services CEIP
+For SQL Server Integration Service (SSIS), you have a SQL Server Integration Services CEIP service 13.0
+
+One CEIP service per instance per service. For the Engine & SSAS and one just for SSIS(shared component).
+If you have a look on each service, the patterns for the name are the same:
+
+For SQL Server CEIP service, you have a SQLTELEMETRY$<InstanceName>
+For SQL Analysis Services CEIP, you have a SSASTELEMETRY$<InstanceName>
+For SQL Server Integration Services CEIP service 13.0 CEIP, you have just SSISTELEMETRY130
+### Disable CEIP services
+```
+##################################################
+# Disable CEIP services  #
+##################################################
+Get-Service |? name -Like "*TELEMETRY*" | select -property name,starttype,status
+Get-Service -name "*TELEMETRY*" | Stop-Service -passthru | Set-Service -startmode disabled
+Get-Service |? name -Like "*TELEMETRY*" | select -property name,starttype,status
+##################################################
+```
+
+### Set all CEIP registry keys to 0
+```
+##################################################
+#  Deactivate CEIP registry keys #
+##################################################
+# Set all CustomerFeedback & EnableErrorReporting in the key directory HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server to 0
+# Set HKEY_LOCAL_MACHINE\Software\Microsoft\Microsoft SQL Server\***\CustomerFeedback=0
+# Set HKEY_LOCAL_MACHINE\Software\Microsoft\Microsoft SQL Server\***\EnableErrorReporting=0
+# *** --> Version of SQL Server (100,110,120,130,140,...)
+# For the Engine
+# Set HKEY_LOCAL_MACHINE\Software\Microsoft\Microsoft SQL Server\MSSQL**.<instance>\CPE\CustomerFeedback=0
+# Set HKEY_LOCAL_MACHINE\Software\Microsoft\Microsoft SQL Server\MSSQL**.<instance>\CPE\EnableErrorReporting=0
+# For SQL Server Analysis Server (SSAS)
+# Set HKEY_LOCAL_MACHINE\Software\Microsoft\Microsoft SQL Server\MSAS**.<instance>\CPE\CustomerFeedback=0
+# Set HKEY_LOCAL_MACHINE\Software\Microsoft\Microsoft SQL Server\MSAS**.<instance>\CPE\EnableErrorReporting=0
+# For Server Reporting Server (SSRS)
+# Set HKEY_LOCAL_MACHINE\Software\Microsoft\Microsoft SQL Server\MSRS**.<instance>\CPE\CustomerFeedback=0
+# Set HKEY_LOCAL_MACHINE\Software\Microsoft\Microsoft SQL Server\MSRS**.<instance>\CPE\EnableErrorReporting=0
+# ** --> Version of SQL Server (10,11,12,13,14,...)
+##################################################
+$Key = 'HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server'
+$FoundKeys = Get-ChildItem $Key -Recurse | Where-Object -Property Property -eq 'EnableErrorReporting'
+foreach ($Sqlfoundkey in $FoundKeys)
+{
+$SqlFoundkey | Set-ItemProperty -Name EnableErrorReporting -Value 0
+$SqlFoundkey | Set-ItemProperty -Name CustomerFeedback -Value 0
+}
+##################################################
+# Set HKEY_LOCAL_MACHINE\Software\Wow6432Node\Microsoft\Microsoft SQL Server\***\CustomerFeedback=0
+# Set HKEY_LOCAL_MACHINE\Software\Wow6432Node\Microsoft\Microsoft SQL Server\***\EnableErrorReporting=0
+# *** --> Version of SQL Server(100,110,120,130,140,...)
+##################################################
+$WowKey = "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Microsoft SQL Server"
+$FoundWowKeys = Get-ChildItem $WowKey | Where-Object -Property Property -eq 'EnableErrorReporting'
+foreach ($SqlFoundWowKey in $FoundWowKeys)
+{
+$SqlFoundWowKey | Set-ItemProperty -Name EnableErrorReporting -Value 0
+$SqlFoundWowKey | Set-ItemProperty -Name CustomerFeedback -Value 0
+}
+```
