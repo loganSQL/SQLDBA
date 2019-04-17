@@ -117,7 +117,15 @@ go
 CLOSE SYMMETRIC KEY SymmetricKeyDBA;
 GO
 
-alter procedure dba_add_pwd (@instance varchar(50), @username varchar(50), @pwd varchar(500)) with encryption
+/********************
+	dba_add_pwd
+********************/
+-- store procedure to add (instance, user, password)
+if exists(select name from sysobjects where name ='dba_add_pwd' and type='P')
+	drop procedure dba_add_pwd
+go
+
+create procedure dba_add_pwd (@instance varchar(50), @username varchar(50), @pwd varchar(500)) with encryption
 as
 begin
 DECLARE @original_login sysname;   
@@ -135,7 +143,7 @@ insert into [dbo].[dba_pwd] ([instance],[username],[pwd], [secret])
 values (@instance, @username,'PROCESSED',EncryptByKey(key_GUID('SymmetricKeyDBA'),@pwd))
 CLOSE SYMMETRIC KEY SymmetricKeyDBA;
 end
-
+go
 /*
 
 exec dba_add_pwd 'SQLInst1', 'UUser', 'xxxx'
@@ -147,7 +155,14 @@ exec dba_add_pwd 'SQLInst199', 'User', 'djhjds'
 
 select * from [dbo].[dba_pwd]
 
-alter procedure dba_get_pwd with encryption
+/********************
+	dba_get_pwd
+********************/
+-- store procedure to get pwd
+if exists(select name from sysobjects where name ='dba_get_pwd' and type='P')
+	drop procedure dba_get_pwd
+go
+create procedure dba_get_pwd with encryption
 as
 begin
 DECLARE @original_login sysname;   
@@ -169,7 +184,14 @@ end
 
 exec dba_get_pwd
 
-alter procedure dba_test_command with encryption
+/********************
+	dba_test_command
+********************/
+-- store procedure to get test command
+if exists(select name from sysobjects where name ='dba_test_command' and type='P')
+	drop procedure dba_test_command
+go
+create procedure dba_test_command with encryption
 as
 begin
 DECLARE @original_login sysname;   
@@ -192,7 +214,15 @@ go
 exec dba_test_command
 go
 
-alter procedure dba_test_command_by_instance (@instance varchar(50)) with encryption
+
+/********************
+	dba_test_command_by_instance
+********************/
+-- store procedure to get test command by instance
+if exists(select name from sysobjects where name ='dba_test_command_by_instance' and type='P')
+	drop procedure dba_test_command_by_instance
+go
+create procedure dba_test_command_by_instance (@instance varchar(50)) with encryption
 as
 begin
 DECLARE @original_login sysname;   
