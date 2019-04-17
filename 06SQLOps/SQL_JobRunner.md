@@ -83,7 +83,7 @@ foreach ($s in $scripts)
 $subjectline=$servername+'  Ad-hoc sql execution. Please see attached.'
 
 # send email
-$sendmailsql="exec msdb..sendOutputEmail '{0}','{1}','{2}'" -f $subjectline,$joglog,$maillist
+$sendmailsql="exec msdb..sendOutputEmail '{0}','{1}','{2}'" -f $subjectline,$joblog,$maillist
 sqlcmd -E -S $servername -Q $sendmailsql
 ```
 
