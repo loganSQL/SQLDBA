@@ -1,3 +1,7 @@
+/*
+	DBA Password Encryptor
+*/
+
 use master
 go
 -- 1 check SQL Server Service Master Key
