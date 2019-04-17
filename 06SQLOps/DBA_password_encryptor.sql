@@ -250,3 +250,11 @@ go
 
 exec dba_test_command_by_instance 'MySQLInst1'
 go
+
+/*
+dba_get_pwd
+
+dba_add_pwd 'MYPSQL', 'MyUser', 'MyPass'
+
+exec dba_test_command_by_instance 'MYPSQL'
+*/
