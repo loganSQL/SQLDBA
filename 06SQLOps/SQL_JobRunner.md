@@ -1,6 +1,6 @@
 # DBA Job Runner
 
-To execute SQL scripts daily
+To execute SQL scripts daily from specific directory
 
 ## Setup
 ```
