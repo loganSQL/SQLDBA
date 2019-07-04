@@ -77,3 +77,13 @@ $params = @{
     'Body' = 'Sending the Attachment'; 
     'SmtpServer' = 'SmtpServer.exmaples.ca'}
 #>
+
+$params = @{ 
+    'From' = 'logansql@exmaples.ca';
+    'To' = 'logansql@exmaples.ca';
+    'Subject' = 'Sending the Attachment'; 
+    'Body' = 'Sending the Attachment'; 
+    'Attachments' =  '.\data.csv ';
+    'SmtpServer' = 'SmtpServer.exmaples.ca'}
+
+Send-MailMessage @params
