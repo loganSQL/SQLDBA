@@ -106,6 +106,65 @@ FROM
   ReportServer.dbo.Users ModifiedBy ON CTG.ModifiedByID = ModifiedBy.UserID
 ORDER BY CTG.Type, CTG.Path
 
+-- list report contents
+SELECT
+  [Path]
+, CASE [Type]
+    WHEN 2 THEN 'Report'
+    WHEN 5 THEN 'Data Source'    
+  END AS TypeName
+, CAST(CAST(content AS varbinary(max)) AS xml)
+, [Description]
+FROM ReportServer.dbo.[Catalog] CTG
+WHERE
+  [Type] IN (2, 5);
+
+
+-- Execution Log
+SELECT * FROM dbo.ExecutionLog
+
+-- more detail 
+SELECT * FROM dbo.ExecutionLog2
+
+-- more more
+SELECT * FROM dbo.ExecutionLog3
+
+SELECT
+  [ItemPath] --Path of the report
+, [UserName]  --Username that executed the report
+, [RequestType] --Usually Interactive (user on the scree) or Subscription
+, [Format] --RPL is the screen, could also indicate Excel, PDF, etc
+, [TimeStart]--Start time of report request
+, [TimeEnd] --Completion time of report request
+, [TimeDataRetrieval] --Time spent running queries to obtain results
+, [TimeProcessing] --Time spent preparing data in SSRS. Usually sorting and grouping.
+, [TimeRendering] --Time rendering to screen
+, [Source] --Live = query, Session = refreshed without rerunning the query, Cache = report snapshot
+, [Status] --Self explanatory
+, [RowCount] --Row count returned by a query
+, [Parameters]
+FROM ReportServer.dbo.ExecutionLog3
+
+
+-- subscription
+SELECT
+  ctg.[Path]
+, s.[Description] SubScriptionDesc
+, sj.[description] AgentJobDesc
+, s.LastStatus
+, s.DeliveryExtension
+, s.[Parameters]
+FROM
+  ReportServer.dbo.[Catalog] ctg 
+    INNER JOIN 
+  ReportServer.dbo.Subscriptions s on s.Report_OID = ctg.ItemID
+    INNER JOIN
+  ReportServer.dbo.ReportSchedule rs on rs.SubscriptionID = s.SubscriptionID
+    INNER JOIN
+  msdb.dbo.sysjobs sj ON CAST(rs.ScheduleID AS sysname) = sj.name
+ORDER BY
+  rs.ScheduleID;
+
 -- machine and installation ID  for SSRS
 Select MachineName,InstallationID,InstanceName,Client,PublicKey,SymmetricKey from Keys
 Where MachineName IS NOT NULL
