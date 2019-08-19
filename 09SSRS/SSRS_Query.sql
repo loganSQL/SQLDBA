@@ -106,7 +106,7 @@ FROM
   ReportServer.dbo.Users ModifiedBy ON CTG.ModifiedByID = ModifiedBy.UserID
 ORDER BY CTG.Type, CTG.Path
 
---
+-- machine and installation ID  for SSRS
 Select MachineName,InstallationID,InstanceName,Client,PublicKey,SymmetricKey from Keys
 Where MachineName IS NOT NULL
 
