@@ -110,7 +110,7 @@ ORDER BY CTG.Type, CTG.Path
 Select MachineName,InstallationID,InstanceName,Client,PublicKey,SymmetricKey from Keys
 Where MachineName IS NOT NULL
 
--- 
+-- configuration
 Select Name,Value from ConfigurationInfo
 
 -- roles
