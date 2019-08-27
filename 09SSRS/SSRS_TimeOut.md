@@ -5,10 +5,6 @@ You can increase the Query Execution Timeout by opening report into the BI studi
 
 For SQL 2008, follow below step
 
-You can increase the Query Execution Timeout by opening report into the BI studio
-
-For SQL 2008, follow below step
-
 * Go to Report Data Explorer.
 * You will see the List of the DataSets
 * Right click on the Appropriate Dataset
