@@ -36,11 +36,11 @@ On the Site Setting Page, choose the "General" tab and choose the Report Timeout
 You can set the httpruntime to run the large report,
 
 You can alter the value of attribute executionTimeout  of tag httpRuntime, default value if 9000 and value is in the seconds.
-
+```
 <system.web>
     <httpRuntime executionTimeout = "9000" />
 </system.web>
-
+```
 Open the Report Server’s Web.config file generally located at <Drive>:\Program Files\Microsoft SQL Server\MSRS10_50.MSSQLSERVER\Reporting Services\ReportServer
 Locate the HttpRuntime parameter and alter the value. If it doesn't exist, you will have to create it within the section
 
