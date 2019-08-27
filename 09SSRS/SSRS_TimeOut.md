@@ -47,8 +47,9 @@ Locate the HttpRuntime parameter and alter the value. If it doesn't exist, you w
 ## 4. DatabaseQueryTimeout
 
 You can alter the value for DatabaseQueryTimeout in the RSReportServer.config located at
-
+```
 <Drive>:\Program Files\Microsoft SQL Server\MSRS10_50.MSSQLSERVER\Reporting Services\ReportServer
+```
 
 The value of timeout is in seconds and default value is 120.
 
