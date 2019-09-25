@@ -149,7 +149,7 @@ GRANT CONNECT ON ENDPOINT::[Hadr_endpoint] TO [logansql\mssqlsvc]
 
 GO
 
-:Connect torqfnsqltest01
+:Connect logansqltest01
 
 IF EXISTS(SELECT * FROM sys.server_event_sessions WHERE name='AlwaysOn_health')
 BEGIN
@@ -190,7 +190,7 @@ GRANT CONNECT ON ENDPOINT::[Hadr_endpoint] TO [logansql\mssqlsvc]
 
 GO
 
-:Connect midqfnsqltest01
+:Connect logansqltest02
 
 IF EXISTS(SELECT * FROM sys.server_event_sessions WHERE name='AlwaysOn_health')
 BEGIN
@@ -203,7 +203,7 @@ END
 
 GO
 
-:Connect torqfnsqltest01
+:Connect logansqltest01
 
 USE [master]
 
