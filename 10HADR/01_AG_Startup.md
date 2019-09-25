@@ -70,6 +70,7 @@ This is like setup log shipping before.
 * Give read/write access to all your service accounts.
 
 # 5. Create SQL Server AlwaysOn Availability Groups
+## Specify AG name, database, replicas
 In SSMS go to Management, right click Availability Groups and click New Availability Group Wizard,
 * Specify Name for AG
 * Select Databases
@@ -83,13 +84,13 @@ In SSMS go to Management, right click Availability Groups and click New Availabi
 •	Allow only read-intent connections: This availability replica will only allow read-intent connections.
 •	Allow all connections: This availability replica will allow all connections for read access, including connections running with older clients. For this example, I'll choose Automatic Failover and Disallow connections to my secondary role and click Next.
 
-# 6. Specify Availability Group Listener
+## Specify Availability Group Listener
 take defaults and choose Next.
 
-# 7. Select Data Synchronization
+## Select Data Synchronization
 	Perform initial data synchronization (need a shared location – fileshare)
 
-# 8. Validation & Summary & Script & Finish
+## Validation & Summary & Script & Finish
 * Configures endpoints 
 * Create Availability Group 
 * Create Availability Group Listener
@@ -105,13 +106,14 @@ take defaults and choose Next.
 * Restore DB2 log to secondary server 
 * Join DB2 to Availability Group on secondary server
 
-# 9. View the Availability Group in SSMS
+## View the Availability Group in SSMS
 In SSMS, drill down to Management => Availability Groups. 
 * Availability Replicas
 * Availability Databases
 * Availability Group Listeners.
 In the dashboard will help you determine if your databases are Synchronized and Healthy.
 
+## Script
 ```
 --- YOU MUST EXECUTE THE FOLLOWING SCRIPT IN SQLCMD MODE.
 :Connect logansqltest01
