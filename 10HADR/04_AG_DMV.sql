@@ -57,14 +57,14 @@ COALESCE(grp.ag_name,'N/A') as AGName
 
 -- Get for a each database a row with:
 -- name, AGType, AGName
--- name: name of the database
+-- DBName: name of the database
 -- AGType: NOT REPLICATED/PRIMARY/SECONDARY
 -- AGName: N/A if NOT REPLICATED, otherwise name of the AG Group the database is part of
  
 select DISTINCT 
 SERVERPROPERTY('ComputerNamePhysicalNetBIOS') AS ServerHost,
-@@SERVERNAME as SQLInstance, 
 @@SERVICENAME as SQLService, 
+@@SERVERNAME as SQLInstance, 
 sd.name as DBName, 
 (
 case 
