@@ -61,7 +61,11 @@ COALESCE(grp.ag_name,'N/A') as AGName
 -- AGType: NOT REPLICATED/PRIMARY/SECONDARY
 -- AGName: N/A if NOT REPLICATED, otherwise name of the AG Group the database is part of
  
-select DISTINCT sd.name, 
+select DISTINCT 
+SERVERPROPERTY('ComputerNamePhysicalNetBIOS') AS ServerHost,
+@@SERVERNAME as SQLInstance, 
+@@SERVICENAME as SQLService, 
+sd.name as DBName, 
 (
 case 
  when
@@ -76,3 +80,4 @@ COALESCE(grp.ag_name,'N/A') as AGName
  from sys.databases as sd
  left outer join sys.dm_hadr_database_replica_states  as hdrs on hdrs.database_id = sd.database_id
  left outer join sys.dm_hadr_name_id_map as grp on grp.ag_id = hdrs.group_id
+ where sd.database_id>4
