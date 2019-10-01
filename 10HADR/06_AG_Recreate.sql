@@ -66,7 +66,7 @@ use [master]
 
 GO
 
-GRANT CONNECT ON ENDPOINT::[Hadr_endpoint] TO [FIRSTNATIONAL\logan.chen]
+GRANT CONNECT ON ENDPOINT::[Hadr_endpoint] TO [LOGANSQL\SQL.DBA]
 
 GO
 
