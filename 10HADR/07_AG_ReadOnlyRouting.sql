@@ -98,7 +98,7 @@ ORDER BY SourceReplica
 
 
 --- test from sqlcmd
-/*
+/* -- PLEASE REMEMBER TO SPECIFY -d dbname!!!!! the readonly is for database specific.
 sqlcmd -S testag2listener -E -d TSQL2012 -K ReadOnly
 1> select @@servername
 2> go
