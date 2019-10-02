@@ -122,7 +122,14 @@ LOGANSQLTEST02
 (1 rows affected)
 */
 
--- Not working
+-- test from SSMS
+-- => Login: Server Name: TestAG2Listener
+-- => option
+-- ---=> Connection Properties: Connect to database: TSQL2012
+-- ---=> Additional Connection Parameters: ApplicationIntent=ReadOnly
+
+
+-- If Not working
 /*
 https://docs.microsoft.com/en-us/sql/database-engine/availability-groups/windows/troubleshoot-always-on-availability-groups-configuration-sql-server?view=sql-server-2017#ROR
 */
