@@ -281,7 +281,7 @@ GROUP BY l.ReportId,
          c.Name,
          c.[Path];
 
--- Reports that haven’t been run since the last time the log was cleared.
+-- Reports that havenï¿½t been run since the last time the log was cleared.
 SELECT c.Name,
        c.[Path]
 FROM [ReportServer].[dbo].[ExecutionLog](NOLOCK) AS l
@@ -363,3 +363,37 @@ GROUP BY l.ReportId,
          c.Name,
          c.[Path]
 ORDER BY [LastRun] DESC;
+
+
+-- List all the users and roles (permissions)
+SELECT C.Name 
+      ,U.UserName 
+      ,R.RoleName 
+      ,R.Description 
+      ,U.AuthType 
+  FROM Reportserver.dbo.Users U 
+  JOIN Reportserver.dbo.PolicyUserRole PUR 
+    ON U.UserID = PUR.UserID 
+  JOIN Reportserver.dbo.Policies P 
+    ON P.PolicyID = PUR.PolicyID 
+  JOIN Reportserver.dbo.Roles R 
+    ON R.RoleID = PUR.RoleID 
+  JOIN Reportserver.dbo.Catalog c 
+    ON C.PolicyID = P.PolicyID 
+ORDER BY U.UserName 
+
+-- Remove users from SSRS database permanently
+-- BE SURE: BACKUP DATABASE REPORTSERVer first!!!!
+
+DECLARE @username varchar(255); SET @username = '<username>';
+DECLARE @ownerid uniqueidentifier; SET @ownerid = (SELECT UserID FROM Users WHERE UserName = @username)
+
+BEGIN TRAN
+
+  UPDATE Subscriptions SET ModifiedByID = OwnerID WHERE ModifiedByID = @ownerid
+  DELETE FROM Subscriptions WHERE OwnerID = @ownerid
+  DELETE FROM Schedule WHERE CreatedById = @ownerid 
+  DELETE FROM PolicyUserRole WHERE UserID = @ownerid
+  DELETE FROM Users WHERE UserID = @ownerid
+
+COMMIT
