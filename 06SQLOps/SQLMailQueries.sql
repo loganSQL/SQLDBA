@@ -1,3 +1,6 @@
+use msdb
+go
+
 -- mail status
 EXECUTE sysmail_help_status_sp  
 go
