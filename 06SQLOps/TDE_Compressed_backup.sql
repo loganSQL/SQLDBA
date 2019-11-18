@@ -68,10 +68,10 @@ https://docs.microsoft.com/en-us/sql/t-sql/statements/backup-transact-sql?view=s
  Try 1 MB
  MAXTRANSFERSIZE = 1048576
 */
--- Backup FN database which is TDE-enabled on SQL 2016
+-- Backup TestBigDB database which is TDE-enabled on SQL 2016
 -- with MAXTRANSFERSIZE = 1048576 (1MB)
 -- with Compression
-BACKUP DATABASE [FN] TO  DISK = N'E:\temp\TestBigDB_backup_2019_11_14_Compress_With_TDE.bak' 
+BACKUP DATABASE [TestBigDB] TO  DISK = N'E:\temp\TestBigDB_backup_2019_11_14_Compress_With_TDE.bak' 
 WITH NOFORMAT, NOINIT,  
 NAME = N'TestBigDB_backup_2019_11_14_Compress_With_TDE', 
 MAXTRANSFERSIZE = 1048576,
