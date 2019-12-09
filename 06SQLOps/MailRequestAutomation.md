@@ -24,7 +24,7 @@ The submission email is configured to:
 * move submission email to a folder on exchange (for audit purpose)
 
 
-### [Automatically Download Outlook Attachments To Folder With VBA And Rule](<https://www.extendoffice.com/documents/outlook/3747-outlook-auto-download-save-attachments-to-folder.html>)
+### 2.1. [Automatically Download Outlook Attachments To Folder With VBA And Rule](<https://www.extendoffice.com/documents/outlook/3747-outlook-auto-download-save-attachments-to-folder.html>)
 To automatically download attachments, I configured Microsoft outlook client as the following:
 1. Press Alt + F11 keys to open the Microsoft Visual Basic for Applications window.
 
@@ -56,7 +56,7 @@ Since it is not very common to have your own digital certificate, you probably s
 
 * check **Macro Settings** in **Trust Center**: **File -> Options -> Trust Center (Trust Center Settings) -> Macro Settings -> "Enable all macros" (Apply macro security settings to installed add-ins)**
 
-[Signing your own macros with SelfCert.exe](<https://www.howto-outlook.com/howto/selfcert.htm>)
+### 2.2. [Signing your own macros with SelfCert.exe](<https://www.howto-outlook.com/howto/selfcert.htm>)
 * Create a certificate (**SELFCERT.exe**)
   * C:\Program Files\Microsoft Office\Office14\SELFCERT.EXE
   * Your certificate's name: LoganTest
