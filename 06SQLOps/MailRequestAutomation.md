@@ -1,5 +1,5 @@
 # Mail Request Automation
-## Overview
+## 1. Overview
 ***
 I received an email daily with some attached scripts to be executed routinely at different times.
 The manual process is :
@@ -15,7 +15,7 @@ I automated the manual process in the following steps:
 At the end of each step, an acknowledge email would be sent with the result.
 ***
 
-## Submission
+## 2. Submission
 When receiving a request, I forward to another email address for submission.
 
 The submission email is configured to:
@@ -68,11 +68,13 @@ Since it is not very common to have your own digital certificate, you probably s
 * Verify your macro security level (**Outlook**)
   * File-> Options-> Trust Center-> Trust Center Settings…-> Macro Settings-> option: *Notifications for digitally signed macros, all other macros disabled*
 
-## Check In / Schedule
+## 3. Check In / Schedule
 
 ### Task Scheduler
 
 I created a Task in Task Schedule on the client machine with submission email by using the following powershell script, to copy the submitted sql scripts from local directory (C:\Request) to server directory (e.g. \\\myserver\e$\Request\Daily)
+
+### CheckIn.ps1
 ```
 $servername = 'myserver'
 $dbname = 'tempdb'
@@ -142,8 +144,9 @@ while($true)
 
 write-host "Timed out"
 ```
-## Script Runner
+## 4. Script Runner
 The following powershell script was called at different SQL Agent Job schedule by identified script name prefix:
+### scriptrunner.p1
 ```
 [CmdletBinding()]
 
@@ -203,9 +206,10 @@ $sendmailsql="exec msdb..sendOutputEmail '{0}','{1}','{2}'" -f $scriptprefix,$Ou
 sqlcmd -E -S $servername -d $dbname -Q $sendmailsql
 ```
 
-## sendOutputEmail
+## 5. sendOutputEmail
 
 The store procedure to send an email with a output file
+### sendOutputEmail.sql
 ```
 USE [msdb]
 GO
