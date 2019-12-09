@@ -70,11 +70,11 @@ Since it is not very common to have your own digital certificate, you probably s
 
 ## 3. Check In / Schedule
 
-### Task Scheduler
+### 3.1. Task Scheduler
 
 I created a Task in Task Schedule on the client machine with submission email by using the following powershell script, to copy the submitted sql scripts from local directory (C:\Request) to server directory (e.g. \\\myserver\e$\Request\Daily)
 
-### CheckIn.ps1
+### 3.2. CheckIn.ps1
 ```
 $servername = 'myserver'
 $dbname = 'tempdb'
@@ -120,7 +120,7 @@ $maillist = 'Devteam@mycompany.com;sqldba@mycompany.com'
 $sendmailsql="exec msdb..sendOutputEmail '{0}','{1}','{2}'" -f 'CheckIn/Schedule Process',$OutputText, $maillist
 sqlcmd -E -S $servername -d $dbname -Q $sendmailsql
 ```
-### MainLoop.ps1
+### 3.3. MainLoop.ps1
 There is a problem to schedule above check-in script in Windows Task Scheduler by repeating at every 5 minutes, because the task doesn't execute well after a while.
 
 To resolve this unpredictability, the following Powershell Script will be used to replace the task scheduler to run the CheckIn.ps1 in an endless loop.
@@ -146,7 +146,7 @@ write-host "Timed out"
 ```
 ## 4. Script Runner
 The following powershell script was called at different SQL Agent Job schedule by identified script name prefix:
-### scriptrunner.p1
+### 4.1. scriptrunner.ps1
 ```
 [CmdletBinding()]
 
@@ -209,7 +209,7 @@ sqlcmd -E -S $servername -d $dbname -Q $sendmailsql
 ## 5. sendOutputEmail
 
 The store procedure to send an email with a output file
-### sendOutputEmail.sql
+### 5.1. sendOutputEmail.sql
 ```
 USE [msdb]
 GO
