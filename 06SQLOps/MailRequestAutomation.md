@@ -119,9 +119,9 @@ $sendmailsql="exec msdb..sendOutputEmail '{0}','{1}','{2}'" -f 'CheckIn/Schedule
 sqlcmd -E -S $servername -d $dbname -Q $sendmailsql
 ```
 ### MainLoop.ps1
-There is a problem to schedule above check-in script in Windows Task Schedule by repeating at every 5 minutes, because the task doesn't execute well after a while.
+There is a problem to schedule above check-in script in Windows Task Scheduler by repeating at every 5 minutes, because the task doesn't execute well after a while.
 
-To resolve this unpredictability, the following Powershell Script will be used to replace the task schedule to run the CheckIn.ps1 in an endless loop.
+To resolve this unpredictability, the following Powershell Script will be used to replace the task scheduler to run the CheckIn.ps1 in an endless loop.
 ```
 $PSScriptRoot
 $i = 1
