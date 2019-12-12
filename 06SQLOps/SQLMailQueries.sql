@@ -24,7 +24,7 @@ SELECT is_broker_enabled FROM sys.databases WHERE name = 'msdb';
 
 -- sysmail_allitems
 select * from sysmail_allitems 
-
+select top 100 * from sysmail_allitems where recipients like 'Team%' order by mailitem_id desc
 --
 -- Show the subject, the time that the mail item row was last  
 -- modified, and the log information.  
