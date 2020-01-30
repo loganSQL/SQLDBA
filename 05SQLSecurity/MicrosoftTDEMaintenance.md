@@ -50,9 +50,9 @@ ENCRYPTION BY PASSWORD='MyBackupPassword1')
 Go
 
 /*
--- make sure to copy LoganSQL_Cert_2020 to sql instance: LoganSQLDR
+-- make sure to copy LoganSQL_Cert_2020 to DR sql instance: LoganSQLDR
 -- For Database Mirroring or AG
--- this is on LoganSQLDR
+-- this is on DR: LoganSQLDR
 CREATE CERTIFICATE LoganSQL_Cert_2020
 From FILE = 'C:\DBCerts\LoganSQL_Cert_2020'
 WITH PRIVATE KEY (file='C:\DBCerts\LoganSQL_Cert_2020_Key',
@@ -61,8 +61,8 @@ go
 */
 
 -- to rotate the certificate for database encryption
--- get the following and run one by one
--- rotate certificate doesn't need to scan for encryption because no password change yet
+-- get the following script and run one by one
+-- Rotating certificate doesn't need to scan the database for encryption because no password change yet
 -- like:
 -- use MyTest;	
 -- ALTER DATABASE ENCRYPTION KEY  ENCRYPTION BY SERVER CERTIFICATE LoganSQL_Cert_2020;
@@ -75,8 +75,9 @@ FROM   sys.certificates c
          ON c.thumbprint = dek.encryptor_thumbprint
 go
 
--- Now it is change the master key with new password
--- this will cause all the related database rescan one by one
+-- Now it is time to change the master key with new password
+-- this will cause all the related database rescan one by one for encryption
+-- this process can take times, and do it after hours
 -- new password My2020Password
 
 ALTER MASTER KEY REGENERATE WITH ENCRYPTION BY PASSWORD = 'My2020Password';
@@ -86,11 +87,11 @@ go
 OPEN MASTER KEY DECRYPTION BY PASSWORD = 'My2020Password'
 go
 
--- check
+-- check to make sure the keys modified date updated
 select * from sys.dm_database_encryption_keys
 go
 
--- backup Again
+-- backup Again and remove and send to SecuredVault
 USE Master
 GO
 
