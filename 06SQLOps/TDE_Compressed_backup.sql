@@ -74,8 +74,9 @@ https://docs.microsoft.com/en-us/sql/t-sql/statements/backup-transact-sql?view=s
 BACKUP DATABASE [TestBigDB] TO  DISK = N'E:\temp\TestBigDB_backup_2019_11_14_Compress_With_TDE.bak' 
 WITH NOFORMAT, NOINIT,  
 NAME = N'TestBigDB_backup_2019_11_14_Compress_With_TDE', 
-MAXTRANSFERSIZE = 1048576,
-SKIP, REWIND, NOUNLOAD, COMPRESSION,  
+-- This is the option to for TDE Compression
+MAXTRANSFERSIZE = 1048576, COMPRESSION, 
+SKIP, REWIND, NOUNLOAD,  
 STATS = 10 
 GO 
 
