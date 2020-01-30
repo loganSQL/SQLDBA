@@ -22,7 +22,7 @@ FROM   sys.certificates c
          ON c.thumbprint = dek.encryptor_thumbprint
 go
 
--- use old password
+-- use current password
 OPEN MASTER KEY DECRYPTION BY PASSWORD = 'CurrentPassword'
 go
 
@@ -83,7 +83,7 @@ go
 ALTER MASTER KEY REGENERATE WITH ENCRYPTION BY PASSWORD = 'My2020Password';
 go
 
--- New use the new password
+-- Now use the new password
 OPEN MASTER KEY DECRYPTION BY PASSWORD = 'My2020Password'
 go
 
