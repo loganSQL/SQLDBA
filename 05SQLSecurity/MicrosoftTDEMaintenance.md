@@ -2,7 +2,8 @@
 ## [1. Rotating TDE Certificates without re-encrypting data](https://matthewmcgiffen.com/2018/03/28/rotating-tde-certificates-without-re-encrypting-data/)
 ## [2. TDE – Regenerating the Database Encryption Key](https://matthewmcgiffen.com/2018/04/03/tde-regenerating-the-database-encryption-key/)
 
-
+# Scripts
+```
 -- check MasterKey
 select @@SERVERNAME, * from sys.symmetric_keys
 go
@@ -106,3 +107,4 @@ To FILE = 'C:\DBCerts\LoganSQL_Cert_2020'
 WITH PRIVATE KEY (file='C:\DBCerts\LoganSQL_Cert_2020_Key',
 ENCRYPTION BY PASSWORD='MyBackupPassword1')
 Go
+```
