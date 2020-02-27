@@ -34,7 +34,7 @@ GO
 --is the only server instance running on SQLHOST02.  
 CREATE ENDPOINT Mirroring  
     STATE = STARTED  
-    AS TCP ( LISTENER_PORT = 7022 )  
+    AS TCP ( LISTENER_PORT = 5022 )  
     FOR DATABASE_MIRRORING (ROLE=PARTNER);  
 GO  
 
