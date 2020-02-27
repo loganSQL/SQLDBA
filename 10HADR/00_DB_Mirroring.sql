@@ -44,14 +44,16 @@ STATE=STARTED AS TCP(LISTENER_PORT = PortNumber, LISTENER_IP = ALL)
 FOR DATA_MIRRORING(ROLE = PARTNER, AUTHENTICATION = WINDOWS NEGOTIATE, ENCRYPTION = REQUIRED ALGORITHM RC4)
 
 
--- 2. Set partner and setup job on mirror server, default port 5022
-ALTER DATABASE DatabaseName SET PARTNER = N'TCP://PrincipalServer:PortNumber'
+-- 2. Set partner and setup job on mirror server (SQLHOST02), default port 5022
+ALTER DATABASE DatabaseName SET PARTNER = N'TCP://SQLHOST01.logansql.net:5022'
 EXEC sys.sp_dbmmonitoraddmonitoring -- default is 1 minute
--- 3. Set partner, set asynchronous mode, and setup job on principal server
-ALTER DATABASE DatabaseName SET PARTNER = N'TCP://MirrorServer:PortNumber'
+
+-- 3. Set partner, set asynchronous mode, and setup job on principal server (SQLHOST01)
+ALTER DATABASE DatabaseName SET PARTNER = N'TCP://SQLHOST02.logansql.net:5022'
 ALTER DATABASE DatabaseName SET SAFETY OFF
 EXEC sys.sp_dbmmonitoraddmonitoring -- default is 1 minute
--- 4. FAILOVER
+
+-- 4. FAILOVER (On principal server : SQLHOST01)
 ALTER DATABASE DatabaseName SET PARTNER FAILOVER
 ALTER DATABASE DatabaseName SET PARTNER FORCE_SERVICE_ALLOW_DATA_LOSS
 
