@@ -50,3 +50,33 @@ notepad.exe logansqltestsql01.logansql.net_cluster.log
 
 ## create log in the past 5 min
 Get-ClusterLog -TimeSpan 5
+
+## ********************************************************************
+## Configuring IP Addresses and Dependencies for Multi-Subnet Clusters
+## ********************************************************************
+## https://techcommunity.microsoft.com/t5/Failover-Clustering/Configuring-IP-Addresses-and-Dependencies-for-Multi-Subnet/ba-p/371698
+##
+## find the correct name of the CCR (Cluster Core Resources)
+Get-ClusterGroup
+## 
+## add a new IP Address which is a type of cluster resource.
+# Add-ClusterResource –Name NewIP –ResourceType “IP Address” –Group “Cluster Group”
+## The following IP will be shown as Other Resources
+Add-ClusterResource -Name "Cluster IP Address XXX.XX.XX.XX"  -ResourceType "IP Address" -Group "Cluster Group"
+## right click to specify subnet mask and static IP address, and Apply
+##
+## configure dependency of CLUSTER Server Name
+## right click CCR, Server Name
+##   add the above ip into IP Adresses of the cluster
+##   Dependencies => OR 
+## Apply
+
+##
+## Testing Failover
+Move-ClusterGroup “Cluster Group” –node LoganSQLTest02
+
+## ********************************************************************
+## DNS Registration with the Network Name Resource
+## ********************************************************************
+## https://techcommunity.microsoft.com/t5/Failover-Clustering/DNS-Registration-with-the-Network-Name-Resource/ba-p/371482
+##
