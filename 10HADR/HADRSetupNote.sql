@@ -15,8 +15,8 @@ Loganbackup G:\Backup
 
 
 -- Enable HADR
-
-FNPSQLCluster
+/*
+Logan SQLCluster
 167.10.20.50 (Site A)
 170.10.20.50 (Site B)
 
@@ -24,6 +24,7 @@ Listener
 167.10.20.51 (Site A)
 170.10.20.50 (Site B)
 
+Hosts
 host1A.logansql.net
 167.10.20.70
 
@@ -33,7 +34,7 @@ host2A.logansql.net
 host1B.logansql.net
 170.10.20.70
 
-
+*/
 --- YOU MUST EXECUTE THE FOLLOWING SCRIPT IN SQLCMD MODE.
 :Connect host1A
 
