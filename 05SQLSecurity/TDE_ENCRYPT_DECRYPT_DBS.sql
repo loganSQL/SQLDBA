@@ -51,7 +51,7 @@ USE MyDBnN; DROP DATABASE ENCRYPTION KEY;
 
 
 /***********************************************
-   PART 2: Decrypt all the user databases
+   PART 2: Encrypt all the user databases
 ************************************************/
 use master
 go
