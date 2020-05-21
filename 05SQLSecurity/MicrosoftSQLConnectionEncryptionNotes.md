@@ -132,7 +132,7 @@ Although the server doesn't enforce the connection encryption, clients can still
           WHERE session_id = @@SPID
         
 ### sing SQLCMD to test encrypted connection
-    1. sqlcmd -S TORPFNSQL14 -Uuser1
+    1. sqlcmd -S YourSQLServer -Uuser1
     2 sql query to make sure connection is encrypted
     
           SELECT session_id, encrypt_option, auth_scheme
