@@ -40,7 +40,7 @@ WHERE SP.type_desc ='SQL_LOGIN'
    AND SP.name NOT IN ('SA')
 Order by SP.name
 
--- generate swindow login creation script
+-- generate window login creation script
 -- simple format
 SELECT 'IF(SUSER_ID('+QUOTENAME(SP.name,'''')+') IS NULL) BEGIN CREATE LOGIN '+QUOTENAME(SP.name)+
        CASE WHEN SP.type_desc = 'SQL_LOGIN'
