@@ -47,6 +47,14 @@ IF(SUSER_ID('TestDomain\test.user3') IS NULL)BEGIN CREATE LOGIN [TestDomain\test
 ```
 ## Synchronize Users in databases
 ```
+-- temp table to keep the userlists
+create table tempdb..userlists (dbname varchar(100), command varchar(300))
+-- generate user sync command
+EXEC sp_MSForEachDB ' Use ?; insert into tempdb..userlists select ''?'' as dbname, ''use ?; alter user [''+ name+''] with login=[''+name+'']'' as command from ?.sys.database_principals where ''?'' not in (''master'',''model'',''msdb'',''tempdb'', ''ReportServer'',''ReportServerTempdb'') and type in (''U'',''G'',''S'') and name not in (''dbo'', ''guest'', ''INFORMATION_SCHEMA'',''sys'') order by type, name'
+-- get the commands
+select * from tempdb..userlists
+```
+```
 EXEC sp_MSForEachDB ' Use ?; select ''?'' as dbname, ''use ?; alter user [''+ name+''] with login=[''+name+'']'' as command from ?.sys.database_principals where ''?'' not in (''master'',''model'',''msdb'',''tempdb'') and type in (''U'',''G'',''S'') and name not in (''dbo'', ''guest'', ''INFORMATION_SCHEMA'',''sys'') order by type, name'
 ```
 ## Reset password if needed
