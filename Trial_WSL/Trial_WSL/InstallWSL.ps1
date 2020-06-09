@@ -150,3 +150,7 @@ int main()
 gcc hello.c -o hello
 # execute the program
 ./hello
+# best tutorial of C
+<#
+https://beginnersbook.com/2014/01/c-tutorial-for-beginners-with-examples/
+#>
