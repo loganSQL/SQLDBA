@@ -82,6 +82,13 @@ ubuntu clean
 # 1.4. Create a UNIX user
 logan 
 
+# if forget password
+# go back to Windows C:
+ubuntu config --default-user root
+
+# reset back the user
+ubuntu config --default-user logan
+
 # 1.5. Run distro update / upgrade
 sudo apt-get update
 sudo apt-get upgrade
@@ -117,3 +124,29 @@ lxrun /uninstall /full
 sc stop lxssmanager
 rmdir /S "\\?\%LOCALAPPDATA%\lxss"
 #>
+
+# One of the needs for Linux on Windows is the programming in C
+#
+# install gcc
+sudo apt-get install gcc
+# where
+which gcc
+gcc --version
+# write your first program
+su logan
+cd /mnt/c/Test
+nano hello.c
+# paste the following
+<#
+#include <stdio.h>
+int main()
+{
+  printf("hello world\n");
+  return 0;
+}
+#>
+<#After writing your program, press Ctrl + O and hit Enter key to save your program. To exit nano press Ctrl + X.#>
+# compile the program
+gcc hello.c -o hello
+# execute the program
+./hello
