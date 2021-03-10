@@ -1,4 +1,4 @@
-# this script is toe remove the timestamp suffix from the backup files
+# this script is to remove the timestamp suffix from the backup files
 Set-Location "\\YourHost\d$\DBBackup"
 
 $BackupName = ""
