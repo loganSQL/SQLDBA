@@ -63,7 +63,7 @@ where dbname not in ('DBA', 'mdw','ReportServer')
 order by dbname, username
 
 
---8. SUNPFNSQL12 Enable logins
+--8. Enable logins
 select 'alter login '+name+' enable' from master..syslogins
 where isntuser =0 and isntgroup=0 and name not like '##MS_%' and name <>'sa'
 order by name
