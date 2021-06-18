@@ -40,7 +40,7 @@ order by database_name
 -- For BigDB
 -- robocopy "G:\DBBackup\myBigDB" "\\MyReplica\f$\DBBackup" MyBigDB_backup_2021_05_15_200003_4095767.bak /MT:16 /MIR /LOG:RoboCopy_MyReplica_MyBigDB.log
 
--- copy all log backup after full backup (exlude FN)
+-- copy all log backup after full backup (exlude BigDB)
 select 'copy '+physical_device_name+' \\MyReplica\f$\DBBackup\temp\Log' from [dbo].[vw_backup_history] 
 where backup_type='Log' and backup_start_date>='2021-06-16 20:00:00.000'
 and database_name not in ('master','msdb','model','MDW','ReportServerTempDB')
