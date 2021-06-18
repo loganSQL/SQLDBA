@@ -43,10 +43,10 @@ order by database_name
 -- copy all log backup after full backup (exlude BigDB)
 select 'copy '+physical_device_name+' \\MyReplica\f$\DBBackup\temp\Log' from [dbo].[vw_backup_history] 
 where backup_type='Log' and backup_start_date>='2021-06-16 20:00:00.000'
-and database_name not in ('master','msdb','model','MDW','ReportServerTempDB')
+and database_name not in ('master','msdb','model','MDW','BigDB','ReportServerTempDB')
 order by database_name
 ```
-all scripts to be execute on cmd under administrator
+all scripts to be executed on cmd under administrator
 ## Generate Restore Backup Scripts
 ```
 use msdb
